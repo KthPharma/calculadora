@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08312A">
+<title>Custo do AVC isquêmico | Tenecteplase e alteplase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --fundo:#EEF2F7; --card:#FFFFFF; --card-2:#F6F8FB; --borda:#E2E8F0; --borda-2:#CBD5E1;
+  --tinta:#0F172A; --tinta-2:#475569; --tinta-3:#94A3B8;
+  --trilho:#08312A; --trilho-2:#0F473B; --trilho-texto:#9CBBB0;
+  --tnk:#0F7A66; --tnk-claro:#DCF0E9; --alt:#8796AB; --alt-claro:#E7ECF2; --sem:#C9822B; --sem-claro:#F7EBDA;
+  --bom:#15803D; --bom-claro:#E3F4EA; --ruim:#B4401C; --ruim-claro:#FBE9E2;
+  --raio:12px; --raio-p:8px;
+  --sombra:0 1px 2px rgba(15,23,42,.05), 0 4px 16px rgba(15,23,42,.04);
+}
+html{font-size:clamp(11.5px, calc(0.62vh + 0.42vw + 3.2px), 15px)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--fundo);color:var(--tinta)}
+body{font-family:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:1rem;line-height:1.4;font-variant-numeric:tabular-nums}
+h1,h2,h3,p{margin:0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--tnk);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.app{height:100vh;height:100dvh;display:grid;grid-template-columns:14.5rem minmax(0,1fr);grid-template-rows:3.6rem minmax(0,1fr)}
+
+/* Barra superior */
+.topo{grid-column:1/-1;display:flex;align-items:center;gap:1rem;padding:0 1.25rem;background:var(--trilho);color:#fff}
+.marca{display:flex;align-items:center;gap:.7rem;min-width:12.25rem}
+.marca-simbolo{width:1.9rem;height:1.9rem;border-radius:8px;overflow:hidden;background:linear-gradient(135deg,#00E47C,#0F7A66);display:grid;place-items:center}
+.marca-simbolo svg{width:1.1rem;height:1.1rem}
+.marca b{display:block;font-size:.95rem;font-weight:700;letter-spacing:-.01em}
+.marca span{display:block;font-size:.72rem;color:var(--trilho-texto)}
+.contexto{flex:1;display:flex;gap:.5rem;align-items:center;min-width:0;overflow:hidden}
+@media (max-width:1560px){.chip.opc{display:none}}
+@media (max-width:1300px){.chip.opc2{display:none}}
+.chip{display:flex;align-items:center;gap:.45rem;background:var(--trilho-2);border:1px solid #1C5A4A;border-radius:999px;padding:.3rem .75rem;font-size:.78rem;color:#D6DEE8;white-space:nowrap}
+.chip em{font-style:normal;color:var(--trilho-texto)}
+.chip .ponto{width:.45rem;height:.45rem;border-radius:50%;background:#64748B}
+.chip .ponto.ok{background:#34D399}.chip .ponto.erro{background:#F87171}
+.acoes-topo{display:flex;gap:.5rem}
+.btn-topo{background:transparent;border:1px solid #1C5A4A;color:#E2E8F0;border-radius:var(--raio-p);padding:.42rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;white-space:nowrap}
+.btn-topo:hover{background:var(--trilho-2)}
+.btn-topo.forte{background:#00E47C;border-color:#00E47C;color:#06301F}
+.btn-topo.forte:hover{background:#33EE9A}
+.btn-topo .contador{display:inline-grid;place-items:center;min-width:1.2rem;height:1.2rem;border-radius:999px;background:#F59E0B;color:#1F1300;font-size:.7rem;margin-left:.35rem;padding:0 .3rem}
+
+/* Trilho de navegacao */
+.trilho{background:var(--trilho);padding:.6rem .6rem 1rem;display:flex;flex-direction:column;gap:.15rem;border-top:1px solid #10453A}
+.trilho-grupo{font-size:.68rem;color:#5E708A;padding:.7rem .7rem .25rem;font-weight:600}
+.nav{display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;border-radius:var(--raio-p);border:0;background:transparent;color:var(--trilho-texto);cursor:pointer;text-align:left;font-size:.85rem;font-weight:600}
+.nav svg{width:1.05rem;height:1.05rem;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav:hover{background:var(--trilho-2);color:#E2E8F0}
+.nav[aria-current="true"]{background:#10453A;color:#fff;box-shadow:inset 3px 0 0 #00E47C}
+.trilho-rodape{margin-top:auto;font-size:.68rem;color:#5E708A;padding:.5rem .7rem;line-height:1.35}
+
+/* Palco e vistas */
+.palco{min-width:0;min-height:0;position:relative}
+.vista{position:absolute;inset:0;padding:1rem 1.25rem 1.1rem;display:none;flex-direction:column;gap:.85rem;min-height:0}
+.vista.ativa{display:flex}
+.vista-cabeca{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex:none}
+.vista-cabeca h2{font-size:1.35rem;font-weight:800;letter-spacing:-.02em}
+.vista-cabeca p{font-size:.85rem;color:var(--tinta-2);margin-top:.15rem}
+.grade{flex:1;min-height:0;display:grid;gap:.85rem}
+
+.card{background:var(--card);border:1px solid var(--borda);border-radius:var(--raio);box-shadow:var(--sombra);padding:.9rem 1rem;display:flex;flex-direction:column;min-height:0;min-width:0;gap:.55rem}
+.card-cabeca{display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem;flex:none}
+.card h3{font-size:.92rem;font-weight:700;letter-spacing:-.01em}
+.card h3 .q{display:inline-grid;place-items:center;min-width:1.35rem;height:1.35rem;border-radius:6px;background:var(--card-2);border:1px solid var(--borda);font-size:.7rem;color:var(--tinta-2);margin-right:.45rem;vertical-align:1px}
+.texto{font-size:.84rem;color:var(--tinta-2)}
+.texto b{color:var(--tinta)}
+.nota{font-size:.72rem;color:var(--tinta-3)}
+.grafico{position:relative;flex:1;min-height:0}
+.cheio{flex:1;min-height:0}
+
+.numero{font-size:1.55rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.numero.g{font-size:1.8rem;white-space:nowrap}
+.rotulo{font-size:.74rem;color:var(--tinta-2);font-weight:600}
+.bom,.texto b.bom{color:var(--bom)}.ruim,.texto b.ruim{color:var(--ruim)}
+
+.segmentado{display:inline-flex;background:var(--card-2);border:1px solid var(--borda);border-radius:var(--raio-p);padding:2px}
+.segmentado button{border:0;background:transparent;padding:.3rem .7rem;border-radius:6px;font-size:.76rem;font-weight:600;color:var(--tinta-2);cursor:pointer;white-space:nowrap}
+.segmentado button[aria-pressed="true"]{background:#fff;color:var(--tinta);box-shadow:0 1px 2px rgba(15,23,42,.12)}
+
+.campo-num{display:flex;align-items:center;border:1px solid var(--borda-2);border-radius:7px;background:#fff;height:1.95rem;min-width:0}
+.campo-num:focus-within{border-color:var(--tnk);box-shadow:0 0 0 3px var(--tnk-claro)}
+.campo-num input{border:0;outline:0;background:transparent;width:100%;min-width:0;text-align:right;padding:0 .45rem;font-size:.82rem;font-weight:600}
+.campo-num span{font-size:.7rem;color:var(--tinta-3);padding-right:.45rem;white-space:nowrap}
+.campo-num.alterado{border-color:var(--tnk);background:#F2FAFA}
+select.sel{border:1px solid var(--borda-2);border-radius:7px;background:#fff;height:1.95rem;padding:0 .4rem;font-size:.8rem;font-weight:600;min-width:0;width:100%}
+.campo-txt{border:1px solid var(--borda-2);border-radius:7px;height:1.95rem;padding:0 .55rem;font-size:.82rem;font-weight:600;width:100%}
+.linha-campo{display:grid;grid-template-columns:minmax(0,1fr) 7rem;gap:.6rem;align-items:center}
+.linha-campo label{font-size:.8rem;color:var(--tinta-2)}
+
+.tab{width:100%;border-collapse:collapse;font-size:.8rem}
+.tab th{font-size:.7rem;font-weight:700;color:var(--tinta-3);text-align:right;padding:.3rem .45rem;border-bottom:1px solid var(--borda)}
+.tab td{text-align:right;padding:.32rem .45rem;border-bottom:1px solid var(--borda)}
+.tab th:first-child,.tab td:first-child{text-align:left}
+.tab tr:last-child td{border-bottom:0}
+.tab tr.total td{font-weight:800;border-top:1px solid var(--borda-2)}
+.tab td.campo{padding:.18rem .3rem}
+.tab .campo-num{height:1.7rem}
+
+.marcador{display:inline-flex;align-items:center;gap:.4rem;font-weight:600}
+.marcador i{width:.6rem;height:.6rem;border-radius:3px;display:inline-block}
+
+.vazio{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;gap:.6rem;border:1.5px dashed var(--borda-2);border-radius:var(--raio-p);padding:1rem;background:var(--card-2)}
+.vazio p{font-size:.84rem;color:var(--tinta-2);max-width:48ch}
+.btn{border:1px solid var(--borda-2);background:#fff;border-radius:7px;padding:.36rem .7rem;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--tinta-3)}
+.btn.primario{background:var(--tinta);border-color:var(--tinta);color:#fff}
+.selo{display:inline-block;font-size:.66rem;font-weight:700;padding:.08rem .45rem;border-radius:999px;white-space:nowrap}
+.selo.validado{background:var(--bom-claro);color:#166534}
+.selo.provisorio{background:#FEF3C7;color:#92400E}
+.selo.pendente{background:var(--ruim-claro);color:#9A3412}
+
+/* Visao geral */
+.g-visao{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+.heroi{background:linear-gradient(140deg,#08312A 0%,#0F5C49 100%);color:#fff;border:0;padding:1.3rem 1.4rem;gap:.8rem;position:relative;overflow:hidden}
+.heroi::after{content:"";position:absolute;right:-4rem;top:-4rem;width:16rem;height:16rem;border-radius:50%;background:radial-gradient(circle,rgba(0,228,124,.20),transparent 70%)}
+.heroi .frase{font-size:clamp(1.5rem,2.9vh + .6vw,2.35rem);font-weight:800;letter-spacing:-.025em;line-height:1.1;max-width:22ch;position:relative}
+.heroi .apoio{font-size:.84rem;color:#B8D2C8;max-width:62ch;position:relative}
+.heroi-numeros{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;position:relative}
+.heroi-numeros div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.55rem .7rem}
+.heroi-numeros span{display:block;font-size:.7rem;color:#9FC4B6;font-weight:600}
+.heroi-numeros b{display:block;font-size:1.15rem;font-weight:800;margin-top:.1rem}
+.heroi-numeros b.bom{color:#6EE7B7}.heroi-numeros b.ruim{color:#FDBA74}
+.kpi .numero.g{font-size:clamp(1.15rem,1.75vw,1.8rem)}
+.kpis{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:.85rem}
+.kpi{justify-content:space-between}
+.kpi .sub{font-size:.74rem;color:var(--tinta-3)}
+.mensagens{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem;flex:1;min-height:0;justify-content:space-between}
+.mensagens li{display:flex;gap:.65rem;align-items:center;font-size:.84rem;font-weight:600;line-height:1.35;padding:.55rem .7rem;border-radius:var(--raio-p);background:var(--card-2);flex:1;align-content:center}
+.mensagens li::before{content:"";flex:none;width:.4rem;align-self:stretch;border-radius:4px;background:var(--tnk)}
+.g-agr{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+.vazio .selo{flex:none}
+
+/* Pacientes */
+.g-pac{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+.funil{flex:1;min-height:0;display:grid;grid-auto-rows:1fr;gap:.3rem}
+.funil-linha{display:grid;grid-template-columns:minmax(0,12rem) minmax(0,1fr) 5.8rem 6.2rem;gap:.7rem;align-items:center}
+.funil-linha.pop{grid-template-columns:minmax(0,12rem) minmax(0,1fr) 5.8rem 6.2rem}.funil-linha.pop .campo-num{grid-column:2/4}.funil-linha.pop>span:empty{display:none}
+.funil-linha .nome{font-size:.8rem;color:var(--tinta-2);font-weight:600;line-height:1.15}
+.funil-barra{height:100%;max-height:1.55rem;background:var(--card-2);border-radius:6px;overflow:hidden;position:relative}
+.funil-barra span{position:absolute;inset:0 auto 0 0;background:var(--alt-claro);border-right:3px solid var(--alt);border-radius:6px}
+.funil-linha.chave .funil-barra span{background:var(--tnk-claro);border-right-color:var(--tnk)}
+.funil-linha b{font-size:.86rem;text-align:right}
+.resumo-pac-x{display:grid;grid-template-rows:auto repeat(3,minmax(0,1fr)) auto;gap:.6rem;flex:1;min-height:0}
+.bloco-num{display:flex;flex-direction:column;justify-content:center;padding:.5rem .7rem;border-radius:10px;background:var(--card-2);border:1px solid var(--borda)}
+.bloco-num.tnk{background:var(--tnk-claro);border-color:#A7DEDB}
+.direto{display:grid;gap:.8rem;align-content:start;padding-top:.3rem}
+
+/* Tratamento */
+.g-trat{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,1.1fr)}
+.dose-bloco{border:1px solid var(--borda);border-radius:10px;padding:.65rem .75rem;display:flex;flex-direction:column;gap:.4rem;flex:1;justify-content:center}
+.dose-bloco .topo-dose b{font-size:1.25rem;font-weight:800}
+.dose-bloco .topo-dose{display:flex;justify-content:space-between;align-items:baseline}
+.frascos{display:flex;gap:.6rem;flex-wrap:wrap;min-height:3.9rem;align-items:flex-end}
+.frasco{display:flex;flex-direction:column;align-items:center;gap:.15rem}
+.frasco i{display:block;width:1.7rem;border-radius:3px 3px 5px 5px;background:var(--alt);position:relative}
+.frasco i::before{content:"";position:absolute;left:25%;right:25%;top:-.28rem;height:.28rem;background:inherit;border-radius:2px 2px 0 0;opacity:.8}
+.frasco small{font-size:.62rem;color:var(--tinta-2);font-weight:700}
+.tnk-bloco .frasco i{background:var(--tnk)}
+.grade-2{display:grid;grid-template-columns:1fr 1fr;gap:.45rem .6rem}
+.grade-2 label{font-size:.7rem;color:var(--tinta-3);font-weight:600;display:block;margin-bottom:.15rem}
+.comparador{display:flex;flex-direction:column;gap:.45rem}
+.op-lista{display:flex;flex-direction:column}
+.op-linha{display:grid;grid-template-columns:minmax(0,1fr) 5.4rem 5.4rem 4.2rem;grid-template-areas:"nome unit qtd total";gap:.35rem;align-items:center;padding:.22rem 0;border-bottom:1px solid var(--borda);font-size:.8rem}
+.op-linha .op-nome{grid-area:nome;padding-left:1.1rem;line-height:1.2}
+.op-linha .op-total{grid-area:total;text-align:right}
+.op-linha.op-cab{font-size:.7rem;font-weight:700;color:var(--tinta-3)}
+.op-linha.op-cab span{text-align:right}.op-linha.op-cab .op-nome{text-align:left;padding-left:0}
+.op-linha .campo-num{height:1.75rem}
+.op-grupo{padding:.45rem 0 .15rem;font-size:.8rem}
+.barra-comp{display:grid;grid-template-columns:7rem minmax(0,1fr) 6.4rem;gap:.5rem;align-items:center;font-size:.8rem}
+.barra-comp .trilha{height:1.5rem;background:var(--card-2);border-radius:5px;overflow:hidden;display:flex}
+.barra-comp .trilha span{height:100%}
+.barra-comp b{text-align:right}
+.legenda{display:flex;gap:.8rem;font-size:.7rem;color:var(--tinta-2)}
+.legenda i{display:inline-block;width:.55rem;height:.55rem;border-radius:2px;margin-right:.3rem;vertical-align:0}
+
+/* Desfechos */
+.g-desf{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:minmax(0,1.35fr) minmax(0,1fr)}
+.g-desf .card-dist{grid-row:1/3}
+.editor-dist .tab td.campo{width:11%}
+
+/* Estado funcional */
+.g-func{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);grid-template-rows:repeat(3,minmax(0,1fr))}
+.g-func .card-mrs{grid-row:1/4}
+.linha-kpi{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex:1}
+.mini-grade{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem}
+.mini-grade div{background:var(--card-2);border-radius:8px;padding:.35rem .5rem}
+.mini-grade b{display:block;font-size:.9rem}
+.mini-grade span{font-size:.68rem;color:var(--tinta-3);font-weight:700}
+
+/* Sem tratamento */
+.g-sem{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr)}
+.g-sem .card-q10{grid-row:1/3}
+
+/* Orcamento */
+.g-orc{grid-template-columns:minmax(0,1fr) 17rem;grid-template-rows:minmax(0,1fr) auto}
+.g-orc .card-tab{grid-column:1/3}
+.pilha-kpi{display:flex;flex-direction:column;gap:.85rem}
+.pilha-kpi .card{flex:1;justify-content:center}
+.pilha-kpi .numero.g{font-size:1.45rem;white-space:normal}
+#t-aio td:first-child{white-space:nowrap}#t-aio td:last-child{white-space:nowrap}#t-aio td.campo .campo-num{max-width:5.6rem;margin-left:auto}
+
+/* Sensibilidade */
+.g-sens{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+.lista-comp{display:flex;flex-direction:column;gap:.3rem}
+.lista-comp div{display:grid;grid-template-columns:.65rem minmax(0,1fr) 5.8rem 3.4rem;gap:.5rem;align-items:center;font-size:.78rem}
+.lista-comp i{width:.65rem;height:.65rem;border-radius:3px}
+.lista-comp b,.lista-comp span{text-align:right}
+
+/* Memoria */
+.g-mem{grid-template-rows:auto minmax(0,1fr)}
+.subabas{display:flex;gap:.3rem;flex-wrap:wrap}
+.painel-mem{display:none;flex:1;min-height:0;gap:.85rem}
+.painel-mem.ativo{display:grid}
+.formula{font-size:.8rem;background:var(--card-2);border:1px solid var(--borda);border-left:3px solid var(--tnk);padding:.5rem .7rem;border-radius:7px;color:var(--tinta-2)}
+.formula b{color:var(--tinta)}
+.paginacao{display:flex;gap:.5rem;align-items:center;justify-content:flex-end;font-size:.76rem;color:var(--tinta-2)}
+
+/* Dialogos */
+dialog{border:0;border-radius:14px;padding:0;width:min(46rem,calc(100vw - 2rem));box-shadow:0 20px 60px rgba(15,23,42,.35)}
+dialog::backdrop{background:rgba(11,22,40,.5)}
+.dlg-corpo{padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.7rem}
+.dlg-corpo h3{font-size:1.05rem;font-weight:800}
+.dlg-pe{padding:.75rem 1.25rem;border-top:1px solid var(--borda);display:flex;justify-content:flex-end;gap:.5rem}
+.form-grade{display:grid;grid-template-columns:1fr 1fr;gap:.6rem .8rem}
+.form-grade label{font-size:.72rem;color:var(--tinta-2);font-weight:700;display:block;margin-bottom:.2rem}
+.lista-pend{display:grid;grid-template-columns:1fr 1fr;gap:.35rem .8rem}
+.lista-pend div{display:flex;justify-content:space-between;gap:.5rem;align-items:center;font-size:.78rem;padding:.35rem .5rem;border-radius:7px;background:var(--card-2)}
+
+.aviso{position:absolute;left:1.25rem;right:1.25rem;bottom:1rem;z-index:5;background:var(--ruim-claro);border:1px solid #F5C2B0;color:#7C2D12;border-radius:10px;padding:.6rem .9rem;font-size:.82rem;font-weight:600}
+.tela-estado{grid-column:1/-1;display:grid;place-items:center;padding:2rem}
+.tela-estado div{max-width:36rem;background:#fff;border-radius:14px;padding:1.5rem;border:1px solid var(--borda);font-size:.9rem;color:var(--tinta-2)}
+.tela-estado b{display:block;color:var(--tinta);font-size:1.05rem;margin-bottom:.4rem}
+
+
+html:not(.movel) .so-movel{display:none!important}
+.faixa-resultado,.nav-inferior,.btn-menu,.titulo-movel{display:none}
+
+/* Notebook com pouca largura: trilho só com ícones */
+@media (min-width:900px) and (max-width:1199px) and (min-height:560px){
+  .app{grid-template-columns:4.4rem minmax(0,1fr)}
+  .trilho{align-items:center;padding:.6rem .4rem}
+  .trilho-grupo,.trilho-rodape,.nav span{display:none}
+  .nav{justify-content:center;padding:.65rem;width:3.2rem}
+  .marca{min-width:0}.marca div:last-child span{display:none}
+  .chip.opc2,.chip.opc{display:none}
+  .btn-topo{padding:.4rem .6rem}
+  .g-trat .med-bloco{display:none!important}
+  #t-aio td:first-child{white-space:normal!important}
+  #t-aio td.campo .campo-num{max-width:5rem}
+  .op-linha{grid-template-columns:minmax(0,1fr) 4.6rem 4.6rem 3.6rem}
+  .g-pac{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+  .funil-linha{grid-template-columns:minmax(0,9rem) minmax(0,1fr) 5.4rem 5rem}
+  .g-orc{grid-template-columns:minmax(0,1fr) 14rem}
+}
+
+/* ================= CELULAR E TELAS PEQUENAS ================= */
+html.movel{font-size:15px}
+.movel .so-desk,.movel .opc-m{display:none!important}
+.movel .app{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto}
+.movel .trilho{display:none}
+.movel .faixa-resultado{grid-row:2}.movel .palco{grid-row:3}.movel .nav-inferior{grid-row:4}
+.movel .topo{height:3.3rem;padding:0 .75rem;padding-top:env(safe-area-inset-top);gap:.6rem}
+.movel .marca{min-width:0}
+.movel .marca div:last-child{display:none}
+.movel .contexto,.movel .acoes-topo{display:none}
+.movel .titulo-movel{display:block;flex:1;min-width:0;font-size:1.02rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.movel .btn-menu{display:inline-flex;align-items:center;gap:.4rem;background:var(--trilho-2);border:1px solid #1C5A4A;color:#fff;border-radius:10px;height:2.5rem;padding:0 .8rem;font-size:.85rem;font-weight:700}
+.movel .btn-menu .contador{display:inline-grid;place-items:center;min-width:1.2rem;height:1.2rem;border-radius:999px;background:#F59E0B;color:#1F1300;font-size:.7rem;padding:0 .3rem}
+.movel .faixa-resultado{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.6rem;align-items:center;background:#0F473B;color:#fff;padding:.45rem .8rem;border:0;text-align:left;width:100%;cursor:pointer}
+.faixa-resultado .fr-a{font-size:.72rem;color:#8FD9BB;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.faixa-resultado .fr-b{font-size:.98rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.faixa-resultado .fr-c{text-align:right;font-size:.7rem;color:#9FB0C6}
+.faixa-resultado .fr-c b{display:block;font-size:.9rem;color:#fff}
+.movel .nav-inferior{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:#fff;border-top:1px solid var(--borda);padding-bottom:env(safe-area-inset-bottom)}
+.nav-inferior button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:.15rem;padding:.45rem .1rem .5rem;font-size:.68rem;font-weight:700;color:var(--tinta-3);min-height:3.6rem}
+.nav-inferior svg{width:1.35rem;height:1.35rem;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-inferior button[aria-current="true"]{color:var(--tnk)}
+.movel .vista{padding:.55rem .6rem .6rem;gap:.5rem}
+.movel .vista-cabeca{display:none}
+.movel .grade{display:flex!important;flex-direction:column;gap:.5rem}
+.movel .split{display:contents!important}
+.movel .vista:not([data-sem-pager]) [data-pag]:not(.pag-ativa){display:none!important}
+.movel [data-pag].pag-ativa{flex:1;min-height:0}
+.movel .card{overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:.8rem .8rem;border-radius:14px}
+.movel .kpis[data-pag].pag-ativa{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:.5rem}
+.movel .pilha-kpi[data-pag].pag-ativa{display:flex;gap:.5rem}
+.pager{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:3px;background:#E2E8F0;border-radius:11px;padding:3px;flex:none}
+.pager button{border:0;background:transparent;border-radius:8px;min-height:2.3rem;font-size:.74rem;font-weight:700;color:var(--tinta-2);padding:0 .2rem;line-height:1.1}
+.pager button[aria-pressed="true"]{background:#fff;color:var(--tinta);box-shadow:0 1px 3px rgba(15,23,42,.15)}
+.movel .card h3{font-size:.95rem}
+.movel .campo-num{height:2.75rem;border-radius:10px}
+.movel .campo-num input{font-size:16px}
+.movel select.sel,.movel .campo-txt{height:2.75rem;font-size:16px;border-radius:10px}
+.movel .tab .campo-num{height:2.6rem}
+.movel .tab .campo-num span{display:none}
+.movel .tab{font-size:.8rem;table-layout:auto}
+.movel .tab td,.movel .tab th{padding:.35rem .25rem}
+.movel .segmentado button{min-height:2.3rem;padding:.3rem .65rem;font-size:.78rem}
+.movel .btn{min-height:2.6rem;padding:.4rem .9rem;font-size:.85rem}
+.movel .grafico{min-height:12rem}
+.movel .numero{font-size:1.4rem}.movel .numero.g{font-size:1.45rem;white-space:normal}
+.movel .heroi{padding:1.1rem}
+.movel .heroi .frase{font-size:1.65rem}
+.movel .heroi-numeros{grid-template-columns:1fr;gap:.4rem}
+.movel .heroi-numeros div{display:flex;justify-content:space-between;align-items:center}
+.movel .heroi-numeros b{margin:0;font-size:1.1rem}
+.movel .mensagens li{font-size:.9rem}
+.movel .funil-linha{grid-template-columns:minmax(0,1fr) auto 7rem;grid-template-areas:"nome nome campo" "barra n campo";gap:.15rem .6rem;align-items:center}
+.movel .funil-linha .nome{grid-area:nome;font-size:.8rem}
+.movel .funil-linha .funil-barra{grid-area:barra;height:.5rem;max-height:.5rem}
+.movel .funil-linha b{grid-area:n;font-size:.78rem}
+.movel .funil-linha .campo-num{grid-area:campo}
+.movel .funil-linha.pop{grid-template-columns:1fr;grid-template-areas:"nome" "campo"}
+.movel .funil-linha.pop b,.movel .funil-linha.pop>span:empty{display:none}
+.movel .funil-linha.pop .campo-num{grid-column:auto}
+.movel .funil{grid-auto-rows:auto;gap:.55rem;align-content:start}
+.movel .linha-campo{grid-template-columns:minmax(0,1fr) 8rem}
+.movel .grade-2{gap:.5rem}
+.movel .frascos{min-height:3.6rem}
+.movel .dose-bloco{flex:none}
+.movel .op-linha .campo-num span{display:none}
+.movel .ed-custos{table-layout:fixed}.movel .ed-custos th:nth-child(1){width:3.3rem}.movel .ed-custos th:nth-child(2){width:36%}.movel .ed-custos th:nth-child(3){width:31%}
+.movel .tab .campo-num input,.movel .op-linha .campo-num input{padding:0 .3rem}
+.movel .card-cabeca{flex-wrap:wrap}
+.movel .op-linha{grid-template-columns:minmax(0,1fr) 5.8rem 4.6rem;grid-template-areas:"nome unit qtd"}
+.movel .op-linha .op-total{display:none}
+.movel .op-nome small{display:block}
+.movel .barra-comp{grid-template-columns:6.2rem minmax(0,1fr) 5.8rem}
+.movel .g-desf .card-dist,.movel .g-func .card-mrs,.movel .g-sem .card-q10{grid-row:auto}
+.movel .mini-grade{grid-template-columns:repeat(3,minmax(0,1fr))}
+.movel .linha-kpi{flex-wrap:wrap}
+.movel .lista-comp div{grid-template-columns:.65rem minmax(0,1fr) 5.2rem 3rem;font-size:.76rem}
+.movel .painel-mem.ativo{grid-template-columns:1fr!important;overflow-y:auto;align-content:start}
+.movel .painel-mem .card{overflow:visible}
+.movel .subabas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.movel .cab-mem{flex-direction:column;align-items:stretch!important;gap:.4rem!important}
+.movel .paginacao .btn{min-height:2.3rem}
+.movel dialog{width:100vw;max-width:100vw;margin:auto 0 0;border-radius:18px 18px 0 0;max-height:88dvh}
+.movel .dlg-corpo{overflow-y:auto;max-height:calc(88dvh - 4.5rem)}
+.movel .form-grade{grid-template-columns:1fr}
+.movel .form-grade>div{grid-column:auto!important}
+.movel .lista-pend{grid-template-columns:1fr}
+.movel .aviso{bottom:.5rem;left:.5rem;right:.5rem}
+.folha-grade{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.folha-grade button{display:flex;align-items:center;gap:.6rem;border:1px solid var(--borda);background:var(--card-2);border-radius:12px;padding:.8rem;font-size:.9rem;font-weight:700;text-align:left;min-height:3.4rem}
+.folha-grade button svg{width:1.2rem;height:1.2rem;stroke:var(--tnk);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.folha-grade button.forte{background:var(--tnk);color:#fff;border-color:var(--tnk)}
+.folha-grade button.forte svg{stroke:#fff}
+.dist-m{display:flex;flex-direction:column;gap:.6rem}
+.dist-m .grade-dist{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem}
+.dist-m label{font-size:.7rem;font-weight:700;color:var(--tinta-3);display:block;margin-bottom:.15rem}
+.aio-m{display:flex;flex-direction:column;gap:.35rem}
+.aio-m .l{display:grid;grid-template-columns:2.6rem minmax(0,1fr) minmax(0,1fr) 5.2rem;gap:.4rem;align-items:center;font-size:.8rem}
+.aio-m .l.cab{font-size:.68rem;color:var(--tinta-3);font-weight:700}
+.aio-m .l b{text-align:right}
+.movel .card.heroi{overflow:hidden}
+.movel [data-painel-ed="custo-editar"] .campo-num span{display:none}
+.texto b{white-space:nowrap}
+@media (max-height:780px){
+  html.movel .campo-num,html.movel select.sel,html.movel .campo-txt{height:2.5rem}
+  html.movel .tab .campo-num{height:2.35rem}
+  .movel .funil{gap:.3rem}.movel .funil-linha{gap:.05rem .6rem}
+  .movel .op-linha{padding:.12rem 0}.movel .op-grupo{padding:.25rem 0 .05rem}
+  .movel .card{padding:.65rem .7rem;gap:.4rem}
+  .movel .pager button{min-height:2.1rem}
+  .movel .frascos{min-height:3rem}.movel .dose-bloco{padding:.45rem .6rem;gap:.25rem}
+  .movel .ed-custos td{padding:.15rem .2rem}
+  .movel .nav-inferior button{min-height:3.2rem;padding:.35rem .1rem .4rem}
+  .movel .faixa-resultado{padding:.3rem .8rem}
+  .movel .comparador{gap:.3rem}
+}
+@media (max-width:370px){.movel .kpis[data-pag].pag-ativa{grid-template-columns:1fr;grid-template-rows:repeat(4,1fr)}.movel .dist-m .grade-dist{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-height:520px){.movel .faixa-resultado{display:none}.movel .nav-inferior button{min-height:2.9rem;flex-direction:row;justify-content:center;gap:.35rem}.movel .topo{height:2.8rem}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topo">
+    <div class="marca">
+      <div class="marca-simbolo" id="marca-simbolo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></div>
+      <div><b id="marca-nome">Custo do AVC isquêmico</b><span>Tenecteplase e alteplase</span></div>
+    </div>
+    <div class="titulo-movel" id="titulo-movel">Visão geral</div>
+    <div class="contexto">
+      <div class="chip"><em>Território</em><span id="chip-territorio">Brasil</span></div>
+      <div class="chip opc2"><em>Trombolisados/ano</em><span id="chip-pacientes">0</span></div>
+      <div class="chip opc"><em>Perspectiva</em><span id="chip-perspectiva">SUS</span></div>
+      <div class="chip"><span class="ponto" id="ponto"></span><span id="status-conexao">Conectando</span></div>
+    </div>
+    <div class="acoes-topo">
+      <button class="btn-topo" id="btn-pendencias" hidden>Premissas a validar<span class="contador" id="n-pend">0</span></button>
+      <button class="btn-topo" id="btn-abrir">Abrir cenário</button>
+      <button class="btn-topo" id="btn-restaurar">Restaurar padrão</button>
+      <button class="btn-topo forte" id="btn-salvar">Salvar cenário</button>
+    </div>
+    <button class="btn-menu" id="btn-menu" aria-label="Ações">Ações<span class="contador" id="n-pend-m" hidden>0</span></button>
+  </header>
+  <button class="faixa-resultado" id="faixa" type="button"><div style="min-width:0"><div class="fr-a" id="fr-a"></div><div class="fr-b" id="fr-b"></div></div><div class="fr-c">Por paciente<b id="fr-c"></b></div></button>
+
+  <nav class="trilho" aria-label="Seções">
+    <div class="trilho-grupo">Resultado</div>
+    <button class="nav" data-vista="visao" aria-current="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Visão geral</span></button>
+    <button class="nav" data-vista="pacientes"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg><span>Pacientes</span></button>
+    <button class="nav" data-vista="tratamento"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v4l-4 11a2 2 0 0 0 2 3h8a2 2 0 0 0 2-3L14 7V3"/></svg><span>Custo do tratamento</span></button>
+    <div class="trilho-grupo">Custos dos desfechos</div>
+    <button class="nav" data-vista="funcional"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Custo por sequela</span></button>
+    <button class="nav" data-vista="semtrat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5.5 5.5l13 13"/></svg><span>Não trombolisar</span></button>
+    <button class="nav" data-vista="trombectomia"><svg viewBox="0 0 24 24"><path d="M4 12h6l2-4 3 8 2-4h3"/><circle cx="12" cy="12" r="9"/></svg><span>Trombectomia</span></button>
+    <button class="nav" data-vista="agregada"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l6 3"/></svg><span>Visão agregada</span></button>
+    <div class="trilho-grupo">Orçamento e fontes</div>
+    <button class="nav" data-vista="orcamento"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M14 7h7v7"/></svg><span>Impacto orçamentário</span></button>
+    <button class="nav" data-vista="memoria"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg><span>Premissas e memória</span></button>
+    <div class="trilho-rodape">Gerado em 18/09/2026 19:05.<br>Custos em reais, sem desconto, com correção anual.</div>
+  </nav>
+
+  <nav class="nav-inferior" aria-label="Seções">
+    <button data-vi="visao"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Resumo</button>
+    <button data-vi="pacientes"><svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg>Pacientes</button>
+    <button data-vi="tratamento"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v4l-4 11a2 2 0 0 0 2 3h8a2 2 0 0 0 2-3L14 7V3"/></svg>Tratamento</button>
+    <button data-vi="semtrat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5.5 5.5l13 13"/></svg>Não tratar</button>
+    <button data-vi="mais"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>Mais</button>
+  </nav>
+
+  <main class="palco" id="palco">
+    <div class="tela-estado"><div><b>Carregando dados</b>Lendo parâmetros, custos e preços no banco de dados.</div></div>
+  </main>
+</div>
+
+<dialog id="dlg-mais">
+  <div class="dlg-corpo">
+    <h3>Outras análises</h3>
+    <div class="folha-grade">
+      <button data-ir-m="funcional"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Custo por sequela</button>
+      <button data-ir-m="trombectomia"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M4 12h6l2-4 3 8 2-4h3"/></svg>Trombectomia</button>
+      <button data-ir-m="agregada"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l6 3"/></svg>Visão agregada</button>
+      <button data-ir-m="orcamento"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M14 7h7v7"/></svg>Impacto orçamentário</button>
+      <button data-ir-m="memoria"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>Premissas e memória</button>
+    </div>
+    <h3 style="margin-top:.4rem">Cenário</h3>
+    <div class="folha-grade">
+      <button class="forte" data-acao="salvar"><svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg>Salvar cenário</button>
+      <button data-acao="abrir"><svg viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3z"/></svg>Abrir cenário</button>
+      <button data-acao="restaurar"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>Restaurar padrão</button>
+      <button data-acao="pendencias"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg>Premissas a validar <span id="n-pend-m2"></span></button>
+    </div>
+  </div>
+  <div class="dlg-pe"><button class="btn" data-fechar>Fechar</button></div>
+</dialog>
+
+<dialog id="dlg-salvar">
+  <div class="dlg-corpo">
+    <h3>Salvar cenário</h3>
+    <div class="form-grade">
+      <div style="grid-column:1/3"><label for="sv-nome">Nome do cenário</label><input class="campo-txt" id="sv-nome" maxlength="120"></div>
+      <div><label for="sv-tipo">Tipo de território</label><select class="sel" id="sv-tipo"><option>Brasil</option><option>Estado</option><option>Município</option><option>Região de saúde</option><option>Hospital</option><option>Outro</option></select></div>
+      <div><label for="sv-uf">UF</label><select class="sel" id="sv-uf"></select></div>
+      <div><label for="sv-resp">Responsável</label><input class="campo-txt" id="sv-resp" maxlength="120"></div>
+    </div>
+    <p class="nota">O nome do território vem da tela Pacientes. Sem login nesta versão: cenários salvos ficam visíveis para quem usa a ferramenta.</p>
+    <p class="nota" id="sv-msg" style="color:var(--ruim)"></p>
+  </div>
+  <div class="dlg-pe"><button class="btn" data-fechar>Cancelar</button><button class="btn primario" id="sv-confirmar">Salvar cenário</button></div>
+</dialog>
+
+<dialog id="dlg-abrir">
+  <div class="dlg-corpo">
+    <h3>Abrir cenário salvo</h3>
+    <select class="sel" id="sel-cenario" size="8" style="height:auto;padding:.3rem"></select>
+    <p class="nota" id="ab-msg"></p>
+  </div>
+  <div class="dlg-pe"><button class="btn" data-fechar>Cancelar</button><button class="btn primario" id="ab-confirmar">Abrir</button></div>
+</dialog>
+
+<dialog id="dlg-pendencias" style="width:min(60rem,calc(100vw - 2rem))">
+  <div class="dlg-corpo">
+    <h3>Premissas a validar</h3>
+    <p class="texto">Dados marcados como provisórios ou pendentes no banco. Os resultados que dependem deles são preliminares.</p>
+    <div class="lista-pend" id="lista-pendencias"></div>
+  </div>
+  <div class="dlg-pe"><button class="btn" data-fechar>Fechar</button></div>
+</dialog>
+
+<script>
+const SUPABASE_URL = "https://xadmxmvbuzbwewlfbcvs.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhZG14bXZidXpid2V3bGZiY3ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk2MTE0NDcsImV4cCI6MjEwNTE4NzQ0N30.iewJyV-V8DNaoghURHIX9aUPat5AbIFy9wO4ZCYmof4";
+const LOGO_URL = "";
+const NOME_FERRAMENTA = "Custo do AVC isquemico";
+</script>
+<script>
+/* Motor de calculo da calculadora. Funcoes puras, sem acesso a tela ou rede. */
+const Motor = (function () {
+  const ESTADOS = [0, 1, 2, 3, 4, 5, 6]; // 6 = obito
+  const ALT_FRASCOS = [10, 20, 50];
+
+  function normalizar(dist) {
+    const soma = dist.reduce((a, b) => a + (Number(b) || 0), 0);
+    if (!(soma > 0)) return { dist: null, somaOriginal: soma };
+    return { dist: dist.map(v => (Number(v) || 0) / soma), somaOriginal: soma };
+  }
+
+  function distCompleta(dist) {
+    return Array.isArray(dist) && dist.length === 7 && dist.every(v => v !== null && v !== '' && !isNaN(Number(v)));
+  }
+
+  // Combinacao de frascos de alteplase com menor custo que cubra a dose.
+  function combinarFrascos(doseMg, precos) {
+    let melhor = null;
+    for (let a = 0; a <= 9; a++) for (let b = 0; b <= 5; b++) for (let c = 0; c <= 2; c++) {
+      const mg = a * 10 + b * 20 + c * 50;
+      if (mg < doseMg - 1e-9) continue;
+      const custo = a * precos[10] + b * precos[20] + c * precos[50];
+      const n = a + b + c;
+      const cand = { f10: a, f20: b, f50: c, mg, custo, n, desperdicio: mg - doseMg };
+      // Regra: menor quantidade total de mg que cubra a dose; depois menor numero de frascos; depois menor custo.
+      if (!melhor || mg < melhor.mg || (mg === melhor.mg && (n < melhor.n || (n === melhor.n && custo < melhor.custo - 1e-6)))) melhor = cand;
+    }
+    return melhor;
+  }
+
+  function custoMedicamento(estrategia, e) {
+    if (estrategia === 'alteplase') {
+      const dose = Math.min(e.dose.alteplaseMgKg * e.peso, e.dose.alteplaseMax);
+      const combo = combinarFrascos(dose, e.precos.alteplase);
+      return { dose, bolus: dose * 0.1, infusao: dose * 0.9, combo, custo: combo.custo };
+    }
+    if (estrategia === 'tenecteplase') {
+      const dose = Math.min(e.dose.tenecteplaseMgKg * e.peso, e.dose.tenecteplaseMax);
+      const frascos = Math.ceil(dose / 25 - 1e-9);
+      return { dose, frascos, desperdicio: frascos * 25 - dose, custo: frascos * e.precos.tenecteplase };
+    }
+    return { dose: 0, custo: 0 };
+  }
+
+  function custoOperacional(estrategia, e) {
+    const itens = (e.operacionais || []).filter(i => i.estrategia === estrategia);
+    const detalhado = itens.map(i => ({ ...i, total: Number(i.custo_unitario) * Number(i.quantidade) }));
+    return { itens: detalhado, custo: detalhado.reduce((a, i) => a + i.total, 0) };
+  }
+
+  function medicamentoDe(estrategia) {
+    if (estrategia === 'alteplase' || estrategia === 'tm_alteplase') return 'alteplase';
+    if (estrategia === 'tenecteplase' || estrategia === 'tm_tenecteplase') return 'tenecteplase';
+    return 'sem_trombolise';
+  }
+
+  function custoTratamento(estrategia, e) {
+    const base = medicamentoDe(estrategia);
+    if (base === 'sem_trombolise') return { medicamento: { custo: 0 }, operacional: { custo: 0, itens: [] }, total: 0 };
+    const med = custoMedicamento(base, e);
+    const op = custoOperacional(base, e);
+    return { medicamento: med, operacional: op, total: med.custo + op.custo };
+  }
+
+  // Trajetoria de 1 paciente que esta no estado k aos 90 dias.
+  // Retorna custos por ano (sem desconto) e por componente.
+  function trajetoriaEstado(k, e) {
+    const H = e.horizonte;
+    const anos = Array.from({ length: H }, () => ({ agudo: 0, anual: 0, obito: 0, vivos: 0, obitos: 0 }));
+    const agudo = e.custosEstado[k].agudo;
+    anos[0].agudo = agudo;
+    if (k === 6) { anos.forEach(a => { a.vivos = 0; }); return anos; }
+    const m = e.mortalidade[k] || 0;
+    const anual = e.custosEstado[k].anual;
+    const infl = e.inflacao || 0;
+    let vivos = 1;
+    for (let y = 0; y < H; y++) {
+      const fracao = y === 0 ? e.fracaoAno1 : 1;
+      const corrige = Math.pow(1 + infl, y);
+      const mortes = vivos * (1 - Math.pow(1 - m, fracao));
+      anos[y].anual = anual * corrige * fracao * (vivos - mortes / 2);
+      anos[y].obito = mortes * e.custoObito * corrige;
+      anos[y].obitos = mortes;
+      vivos -= mortes;
+      anos[y].vivos = vivos;
+    }
+    return anos;
+  }
+
+  function fatorDesconto(y, taxa) { return 1 / Math.pow(1 + taxa, y); }
+
+  function somarAnos(anos, taxa) {
+    let t = { agudo: 0, anual: 0, obito: 0, total: 0 };
+    anos.forEach((a, y) => {
+      const f = fatorDesconto(y, taxa);
+      t.agudo += a.agudo * f; t.anual += a.anual * f; t.obito += a.obito * f;
+    });
+    t.total = t.agudo + t.anual + t.obito;
+    return t;
+  }
+
+  // Custo em 5 anos por paciente para cada estado mRS (inclui evento agudo)
+  function custoPorEstado(e, taxa) {
+    return ESTADOS.map(k => {
+      const traj = trajetoriaEstado(k, e);
+      return { mrs: k, trajetoria: traj, desc: somarAnos(traj, taxa), semDesc: somarAnos(traj, 0) };
+    });
+  }
+
+  function coorte(estrategia, dist, e) {
+    const trat = custoTratamento(estrategia, e);
+    const porEstado = custoPorEstado(e, e.taxaDesconto);
+    const H = e.horizonte;
+    const anos = Array.from({ length: H }, (_, y) => ({ ano: y + 1, tratamento: y === 0 ? trat.total : 0, agudo: 0, anual: 0, obito: 0, vivos: 0, dependentes: 0, independentes: 0 }));
+    const anualPorGrupo = { independentes: 0, leve: 0, dependentes: 0 };
+    ESTADOS.forEach(k => {
+      const p = dist[k];
+      porEstado[k].trajetoria.forEach((a, y) => {
+        anos[y].agudo += p * a.agudo; anos[y].anual += p * a.anual; anos[y].obito += p * a.obito;
+        anos[y].vivos += p * a.vivos;
+        if (k <= 1) anos[y].independentes += p * a.vivos;
+        if (k >= 3 && k <= 5) anos[y].dependentes += p * a.vivos;
+        const f = fatorDesconto(y, e.taxaDesconto);
+        if (k <= 1) anualPorGrupo.independentes += p * a.anual * f;
+        else if (k === 2) anualPorGrupo.leve += p * a.anual * f;
+        else if (k <= 5) anualPorGrupo.dependentes += p * a.anual * f;
+      });
+    });
+    anos.forEach((a, y) => {
+      a.totalSemDesc = a.tratamento + a.agudo + a.anual + a.obito;
+      a.fator = fatorDesconto(y, e.taxaDesconto);
+      a.total = a.totalSemDesc * a.fator;
+    });
+    const desc = { tratamento: trat.total, agudo: 0, anual: 0, obito: 0 };
+    anos.forEach(a => { desc.agudo += a.agudo * a.fator; desc.anual += a.anual * a.fator; desc.obito += a.obito * a.fator; });
+    desc.total = desc.tratamento + desc.agudo + desc.anual + desc.obito;
+    const semDesc = anos.reduce((s, a) => s + a.totalSemDesc, 0);
+    return {
+      estrategia, dist, tratamento: trat, anos, desc, totalSemDesc: semDesc,
+      custoAnualMedio: desc.total / H, anualPorGrupo,
+      obitos90d: dist[6], independentes90d: dist[0] + dist[1], dependentes90d: dist[3] + dist[4] + dist[5],
+      porEstado
+    };
+  }
+
+  // Decomposicao exata da diferenca de custo entre duas coortes (b menos a).
+  function decompor(a, b) {
+    const C = a.porEstado.map(x => x.desc.total);
+    const Sa = 1 - a.dist[6], Sb = 1 - b.dist[6];
+    const Csa = Sa > 0 ? a.dist.slice(0, 6).reduce((s, p, k) => s + p * C[k], 0) / Sa : 0;
+    const Csb = Sb > 0 ? b.dist.slice(0, 6).reduce((s, p, k) => s + p * C[k], 0) / Sb : 0;
+    const tratamento = b.desc.tratamento - a.desc.tratamento;
+    const incapacidade = Sb * (Csb - Csa);
+    const mortalidade = (b.dist[6] - a.dist[6]) * (C[6] - Csa);
+    return { tratamento, incapacidade, mortalidade, total: tratamento + incapacidade + mortalidade, verificacao: b.desc.total - a.desc.total, custoMedioSobrevivente: { a: Csa, b: Csb }, custoObito: C[6] };
+  }
+
+  function media(dist, custos, estados) {
+    const peso = estados.reduce((s, k) => s + dist[k], 0);
+    if (!(peso > 0)) return estados.reduce((s, k) => s + custos[k], 0) / estados.length;
+    return estados.reduce((s, k) => s + dist[k] * custos[k], 0) / peso;
+  }
+
+  function funil(f) {
+    const etapas = [];
+    let n = f.populacao; etapas.push({ chave: 'populacao', rotulo: 'População do território', n });
+    const passos = [
+      ['incidencia_avc', 'Casos de AVC por ano'],
+      ['prop_avci', 'AVC isquêmico'],
+      ['taxa_trombolise', 'Recebem trombólise']
+    ];
+    passos.forEach(([k, r]) => { n = n * f[k]; etapas.push({ chave: k, rotulo: r, taxa: f[k], n }); });
+    const elegiveis = etapas[2].n, tratados = etapas[3].n;
+    return { etapas, elegiveis, tratados, naoTratados: elegiveis - tratados };
+  }
+
+  function pacientes(e) {
+    if (e.modo === 'direto') {
+      const tratados = Number(e.direto.tratados) || 0;
+      const elegiveis = Math.max(Number(e.direto.elegiveis) || 0, tratados);
+      return { tratados, elegiveis, naoTratados: elegiveis - tratados, funil: null };
+    }
+    const fu = funil(e.funil);
+    return { tratados: fu.tratados, elegiveis: fu.elegiveis, naoTratados: fu.naoTratados, funil: fu };
+  }
+
+  // Impacto orcamentario: coortes anuais, sem desconto, com difusao da tenecteplase.
+  function impactoOrcamentario(ca, ct, pac, e) {
+    const H = e.horizonte;
+    const vA = ca.anos.map(a => a.totalSemDesc), vT = ct.anos.map(a => a.totalSemDesc);
+    const linhas = [];
+    let acumRef = 0, acumProp = 0;
+    for (let y = 0; y < H; y++) {
+      let ref = 0, prop = 0, medRef = 0, medProp = 0;
+      for (let c = 0; c <= y; c++) {
+        const N = pac.tratados * Math.pow(1 + e.crescimentoPop, c);
+        const t = y - c;
+        const sRef = e.shareAtual[c] || 0, sProp = e.shareProposto[c] || 0;
+        ref += N * (sRef * vT[t] + (1 - sRef) * vA[t]);
+        prop += N * (sProp * vT[t] + (1 - sProp) * vA[t]);
+        if (t === 0) {
+          medRef += N * (sRef * ct.tratamento.total + (1 - sRef) * ca.tratamento.total);
+          medProp += N * (sProp * ct.tratamento.total + (1 - sProp) * ca.tratamento.total);
+        }
+      }
+      acumRef += ref; acumProp += prop;
+      linhas.push({ ano: y + 1, pacientesNovos: pac.tratados * Math.pow(1 + e.crescimentoPop, y), referencia: ref, proposto: prop, impacto: prop - ref, tratamentoRef: medRef, tratamentoProp: medProp, impactoTratamento: medProp - medRef });
+    }
+    return { linhas, acumRef, acumProp, acumImpacto: acumProp - acumRef };
+  }
+
+  function calcular(e) {
+    const fator = e.fatorAssistencial || 1;
+    if (fator !== 1) {
+      e = JSON.parse(JSON.stringify(e));
+      e.custosEstado = e.custosEstado.map(c => ({ agudo: c.agudo * fator, anual: c.anual * fator }));
+      e.custoObito = e.custoObito * fator;
+    }
+    const pac = pacientes(e);
+    const d = {};
+    const norm = {};
+    ['alteplase', 'tenecteplase', 'sem_trombolise', 'tm_alteplase', 'tm_tenecteplase'].forEach(s => {
+      if (distCompleta(e.distribuicoes[s])) {
+        const n = normalizar(e.distribuicoes[s]);
+        norm[s] = n; d[s] = n.dist;
+      } else norm[s] = null;
+    });
+    const ca = coorte('alteplase', d.alteplase, e);
+    const ct = coorte('tenecteplase', d.tenecteplase, e);
+    const cs = d.sem_trombolise ? coorte('sem_trombolise', d.sem_trombolise, e) : null;
+    const C5 = ca.porEstado.map(x => x.desc.total);
+    const Anual = e.custosEstado.map(x => x.anual);
+
+    const r = { pacientes: pac, normalizacao: norm, coortes: { alteplase: ca, tenecteplase: ct, sem_trombolise: cs } };
+    r.tnkVsAlt = decompor(ca, ct);
+    r.tnkVsAltPop = { total: r.tnkVsAlt.total * pac.tratados, tratamento: r.tnkVsAlt.tratamento * pac.tratados, incapacidade: r.tnkVsAlt.incapacidade * pac.tratados, mortalidade: r.tnkVsAlt.mortalidade * pac.tratados };
+    r.custoFuturoEvitado = (ct.desc.total - ct.desc.tratamento) - (ca.desc.total - ca.desc.tratamento);
+
+    // Q5 e Q6: custo de dependencia e ganho da independencia (media ponderada pela distribuicao da alteplase)
+    const dRef = d.alteplase;
+    r.dependencia = {
+      custo5anos: media(dRef, C5, [3, 4, 5]), custoAnual: media(dRef, Anual, [3, 4, 5]),
+      porEstado: [3, 4, 5].map(k => ({ mrs: k, anual: Anual[k], cinco: C5[k] }))
+    };
+    r.independencia = { custo5anos: media(dRef, C5, [0, 1]), custoAnual: media(dRef, Anual, [0, 1]) };
+    r.economiaIndependencia = { cinco: r.dependencia.custo5anos - r.independencia.custo5anos, anual: r.dependencia.custoAnual - r.independencia.custoAnual };
+
+    // Q11: deslocar 1 ponto percentual de mRS 3 a 5 para mRS 0 a 1 (proporcional)
+    const desloc = (dist, pp) => {
+      const out = dist.slice();
+      const dep = dist[3] + dist[4] + dist[5], ind = dist[0] + dist[1];
+      const x = Math.min(pp, dep);
+      [3, 4, 5].forEach(k => { out[k] -= dep > 0 ? x * dist[k] / dep : x / 3; });
+      [0, 1].forEach(k => { out[k] += ind > 0 ? x * dist[k] / ind : x / 2; });
+      return out;
+    };
+    const custoDist = dist => dist.reduce((s, p, k) => s + p * C5[k], 0);
+    r.sensibilidadeDesfecho = {
+      porPontoPercentual: custoDist(desloc(dRef, 0.01)) - custoDist(dRef),
+      porPacienteIndependente: -r.economiaIndependencia.cinco
+    };
+
+    // Q9 e Q10
+    if (cs) {
+      r.semVsAlt = decompor(cs, ca);
+      r.semVsTnk = decompor(cs, ct);
+      r.custoNaoTratarPorPaciente = { alteplase: cs.desc.total - ca.desc.total, tenecteplase: cs.desc.total - ct.desc.total };
+      r.custoNaoTratarPop = { alteplase: r.custoNaoTratarPorPaciente.alteplase * pac.naoTratados, tenecteplase: r.custoNaoTratarPorPaciente.tenecteplase * pac.naoTratados };
+      const retorno = c => {
+        const evitado = (cs.desc.total) - (c.desc.total - c.desc.tratamento);
+        return c.desc.tratamento > 0 ? evitado / c.desc.tratamento : null;
+      };
+      r.retornoPorReal = { alteplase: retorno(ca), tenecteplase: retorno(ct) };
+      const indExtra = s2 => s2.independentes90d - cs.independentes90d;
+      r.trombolisarVsNao = {
+        alteplase: { indExtra: indExtra(ca), nnt: indExtra(ca) > 0 ? 1 / indExtra(ca) : null, custoPorIndependente: indExtra(ca) > 0 ? (ca.desc.total - cs.desc.total) / indExtra(ca) : null, obitosEvitados: cs.dist[6] - ca.dist[6] },
+        tenecteplase: { indExtra: indExtra(ct), nnt: indExtra(ct) > 0 ? 1 / indExtra(ct) : null, custoPorIndependente: indExtra(ct) > 0 ? (ct.desc.total - cs.desc.total) / indExtra(ct) : null, obitosEvitados: cs.dist[6] - ct.dist[6] }
+      };
+    }
+
+    // Trombectomia: trombolise previa com tenecteplase comparada a alteplase
+    if (d.tm_alteplase && d.tm_tenecteplase) {
+      const tmA = coorte('tm_alteplase', d.tm_alteplase, e);
+      const tmT = coorte('tm_tenecteplase', d.tm_tenecteplase, e);
+      const dec = decompor(tmA, tmT);
+      r.trombectomia = {
+        alteplase: tmA, tenecteplase: tmT, decomposicao: dec,
+        diferenca: tmT.desc.total - tmA.desc.total,
+        independentesExtra: (tmT.independentes90d - tmA.independentes90d),
+        obitosEvitados: (tmA.dist[6] - tmT.dist[6]),
+        recanalizacao: e.recanalizacao || null
+      };
+      r.trombectomiaPop = pac.tmPacientes ? r.trombectomia.diferenca * pac.tmPacientes : null;
+    }
+
+    // Analise agregada (certeza alta do GRADE): sem sequela contra com sequela
+    if (e.agregado) {
+      const pesos = (dist, ks) => { const w = ks.reduce((s2, k) => s2 + dist[k], 0); return w > 0 ? ks.reduce((s2, k) => s2 + dist[k] * e.custosEstado[k].agudo, 0) / w : 0; };
+      const H2 = e.horizonte, infl = e.inflacao || 0;
+      const fatorAnos = (() => { let t = 0; for (let y = 0; y < H2; y++) t += (y === 0 ? e.fracaoAno1 : 1) * Math.pow(1 + infl, y) * fatorDesconto(y, e.taxaDesconto); return t; })();
+      const braco = (s, pInd) => {
+        const dist = d[s], pObito = dist[6], pSeq = Math.max(0, 1 - pInd - pObito);
+        const trat = custoTratamento(s, e).total;
+        const agudo = pInd * pesos(dist, [0, 1]) + pSeq * pesos(dist, [2, 3, 4, 5]) + pObito * e.custosEstado[6].agudo;
+        const anual = (pSeq * e.agregado.custoComSequela + pInd * e.agregado.custoSemSequela) * fatorAnos;
+        return { estrategia: s, pInd, pObito, pSeq, tratamento: trat, agudo, anual, total: trat + agudo + anual };
+      };
+      const ag = braco('alteplase', e.agregado.indAlteplase), tg = braco('tenecteplase', e.agregado.indTenecteplase);
+      r.agregado = { alteplase: ag, tenecteplase: tg, diferenca: tg.total - ag.total, diferencaPop: (tg.total - ag.total) * pac.tratados, semSequelaExtra: (tg.pInd - ag.pInd) * pac.tratados, fatorAnos };
+    }
+
+    r.impacto = impactoOrcamentario(ca, ct, pac, e);
+    return r;
+  }
+
+  function clonar(o) { return JSON.parse(JSON.stringify(o)); }
+
+  return { calcular, funil, combinarFrascos, custoTratamento, normalizar };
+})();
+if (typeof module !== 'undefined') module.exports = Motor;
+
+</script>
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const fmtNum=(v,d=0)=>isFinite(v)?Number(v).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}):'';
+const moeda=v=>isFinite(v)?'R$ '+fmtNum(Math.abs(v),2):'n/d';
+const sm=v=>(v<0?'-':'')+moeda(v);
+const moeda0=v=>isFinite(v)?(v<0?'-':'')+'R$ '+fmtNum(Math.abs(v),0):'n/d';
+const pct=(v,d=1)=>isFinite(v)?fmtNum(v*100,d)+'%':'n/d';
+function grande(v){const a=Math.abs(v);if(!isFinite(a))return 'n/d';if(a>=1e9)return 'R$ '+fmtNum(a/1e9,2)+' bi';if(a>=1e6)return 'R$ '+fmtNum(a/1e6,1)+' milhões';if(a>=1e3)return 'R$ '+fmtNum(a/1e3,0)+' mil';return 'R$ '+fmtNum(a,0);}
+function curto(v){const a=Math.abs(v),s=v<0?'-':'';if(a>=1e9)return s+fmtNum(a/1e9,1)+' bi';if(a>=1e6)return s+fmtNum(a/1e6,1)+' mi';if(a>=1e3)return s+fmtNum(a/1e3,a<1e4?1:0)+' mil';return s+fmtNum(a,0);}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clonar=o=>JSON.parse(JSON.stringify(o));
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function lerNumero(t){let s=String(t).trim().replace(/\s|R\$|%/g,'');if(s==='')return null;if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');const n=Number(s);return isFinite(n)?n:null;}
+const getPath=(o,p)=>p.split('.').reduce((a,k)=>a==null?a:a[k],o);
+function setPath(o,p,v){const k=p.split('.');let a=o;for(let i=0;i<k.length-1;i++)a=a[k[i]];a[k[k.length-1]]=v;}
+const cls=v=>v<0?'bom':(v>0?'ruim':'');
+const movel=()=>document.documentElement.classList.contains('movel');
+
+const NOME={alteplase:'Alteplase',tenecteplase:'Tenecteplase',sem_trombolise:'Sem trombólise',tm_alteplase:'Trombectomia com alteplase',tm_tenecteplase:'Trombectomia com tenecteplase',ninds_placebo:'NINDS placebo',ninds_alteplase:'NINDS alteplase'};
+const COR={alteplase:css('--alt'),tenecteplase:css('--tnk'),sem_trombolise:css('--sem'),tm_alteplase:css('--alt'),tm_tenecteplase:css('--tnk')};
+const ROT=['mRS 0','mRS 1','mRS 2','mRS 3','mRS 4','mRS 5','Óbito'];
+const COR_MRS=['#0F7A66','#3FA48C','#93CBBB','#E9C48A','#D08A3A','#A4561F','#475569'];
+const UFS='AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SC SE SP TO'.split(' ');
+const ICMS=[['0','0%'],['12','12%'],['17','17%'],['17.5','17,5%'],['18','18%'],['19','19%'],['19.5','19,5%'],['20','20%'],['20.5','20,5%'],['21','21%'],['22','22%'],['22.5','22,5%'],['23','23%'],['sem_impostos','Sem impostos']];
+const TAXAS_TROMBOLISE=[[0.05,'5% (situação atual, Bonfim 2026)'],[0.10,'10% (cenário de melhoria)'],[0.15,'15% (cenário de melhoria)'],[0.20,'20% (teto da Portaria 665)']];
+const METODOS=[[1,'NINDS: distribuição do grupo placebo'],[2,'NINDS aplicado à distribuição da metanálise'],[3,'Conservador: 9,8 pontos percentuais (NNT 10)']];
+
+function cab(x){const h={apikey:SUPABASE_KEY,'Content-Type':'application/json'};if(!SUPABASE_KEY.startsWith('sb_publishable_'))h.Authorization='Bearer '+SUPABASE_KEY;return Object.assign(h,x||{});}
+async function api(t,q){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}?${q||'select=*'}`,{headers:cab()});if(!r.ok)throw new Error(`Falha ao ler ${t} (HTTP ${r.status}). ${await r.text()}`);return r.json();}
+async function inserir(t,d){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}`,{method:'POST',headers:cab({Prefer:'return=representation'}),body:JSON.stringify(d)});if(!r.ok)throw new Error(`Falha ao gravar (HTTP ${r.status}). ${await r.text()}`);return r.json();}
+
+let BD,BASE,E,R;const G={};
+let modoCoorte='tenecteplase', paginaFontes=0, municipios=[];
+
+async function carregar(){
+  const [parametros,dist,custos,mort,oper,versoes,precos,refs,cenarios,territorios]=await Promise.all([
+    api('parametros','select=*&order=grupo,ordem'),api('mrs_distribuicao','select=*&order=estrategia,mrs'),api('custos_estado','select=*&order=mrs'),
+    api('mortalidade_anual','select=*&order=mrs'),api('custos_operacionais','select=*&order=estrategia,ordem'),api('cmed_versoes','select=*&order=ano.desc,id.desc'),
+    api('cmed_precos','select=*'),api('referencias','select=*&order=codigo'),api('cenarios','select=id,nome,territorio_tipo,territorio_nome,uf,criado_em&order=criado_em.desc&limit=100'),
+    api('ibge_populacao','select=nivel,uf,nome,populacao&nivel=in.(pais,uf)&order=nivel,nome')]);
+  BD={parametros,dist,custos,mort,oper,versoes,precos,refs,cenarios,territorios,param:{}};
+  parametros.forEach(p=>BD.param[p.chave]=p);
+}
+function montarBase(){
+  const P=k=>{const p=BD.param[k];if(!p)throw new Error('Parâmetro ausente no banco: '+k);return Number(p.valor);};
+  const distr={};
+  ['alteplase','tenecteplase','ninds_placebo','ninds_alteplase','tm_alteplase','tm_tenecteplase'].forEach(s=>{
+    distr[s]=[0,1,2,3,4,5,6].map(k=>{const l=BD.dist.find(d=>d.estrategia===s&&d.mrs===k);return l&&l.proporcao!==null?Number(l.proporcao):null;});});
+  const H=P('horizonte_anos');
+  BASE={territorio:'Brasil',ambito:'pais',uf:'',modo:'funil',perspectiva:'SUS',metodoSemTrombolise:P('metodo_sem_trombolise'),deltaConservador:P('delta_conservador'),
+    funil:{populacao:P('populacao'),incidencia_avc:P('incidencia_avc'),prop_avci:P('prop_avci'),taxa_trombolise:P('taxa_trombolise')},
+    incidenciaAlternativa:P('incidencia_avc_alternativa'),
+    direto:{tratados:0,elegiveis:0},peso:P('peso_medio'),
+    dose:{alteplaseMgKg:P('alteplase_mg_kg'),alteplaseMax:P('alteplase_dose_max'),tenecteplaseMgKg:P('tenecteplase_mg_kg'),tenecteplaseMax:P('tenecteplase_dose_max')},
+    preco:{versaoId:BD.versoes.length?BD.versoes[0].id:null,tipo:'PF',icms:'0',alc:false,custom:{a10:null,a20:null,a50:null,t25:null},descontoAlt:0,descontoTnk:0},
+    operacionais:BD.oper.map(o=>({estrategia:o.estrategia,item:o.item,custo_unitario:Number(o.custo_unitario),unidade:o.unidade,quantidade:Number(o.quantidade)})),
+    custosEstado:[0,1,2,3,4,5,6].map(k=>{const c=BD.custos.find(x=>x.mrs===k);return{agudo:Number(c.custo_agudo_90d),anual:Number(c.custo_anual)};}),
+    mortalidade:[0,1,2,3,4,5].map(k=>{const m=BD.mort.find(x=>x.mrs===k);return m?Number(m.taxa):0;}),
+    custoObito:P('custo_obito_pos90'),horizonte:H,fracaoAno1:P('fracao_ano1_pos_agudo'),taxaDesconto:P('taxa_desconto'),inflacao:P('inflacao_anual'),
+    fatorAssistencial:P('fator_assistencial'),fracaoMrs5:P('fracao_mrs5_grupo56'),
+    crescimentoPop:P('crescimento_populacional'),crescimentoCasos:P('crescimento_casos'),
+    shareAtual:Array.from({length:H},(_,i)=>P('share_atual_ano'+(i+1))),shareProposto:Array.from({length:H},(_,i)=>P('share_proposto_ano'+(i+1))),
+    agregado:{indAlteplase:P('grade_ind_alteplase'),indTenecteplase:P('grade_ind_tenecteplase'),custoComSequela:P('custo_anual_com_sequela'),custoSemSequela:P('custo_anual_sem_sequela')},
+    recanalizacao:{alteplase:P('recanalizacao_alteplase'),tenecteplase:P('recanalizacao_tenecteplase')},
+    proporcaoTm:P('proporcao_trombectomia'),
+    distribuicoes:distr};
+  const fu=Motor.funil(BASE.funil);BASE.direto={tratados:Math.round(fu.tratados),elegiveis:Math.round(fu.elegiveis)};
+}
+
+/* Braco sem trombolise conforme o metodo escolhido */
+function semTrombolise(){
+  const base=Motor.normalizar(E.distribuicoes.alteplase).dist;
+  const pl=Motor.normalizar(E.distribuicoes.ninds_placebo).dist;
+  const al=Motor.normalizar(E.distribuicoes.ninds_alteplase).dist;
+  if(!base||!pl||!al) return null;
+  const m=Number(E.metodoSemTrombolise);
+  if(m===1) return pl;
+  if(m===3){
+    const d=E.deltaConservador, ind=base[0]+base[1], resto=1-ind;
+    if(ind<=0||resto<=0||d>=ind) return null;
+    return base.map((p,k)=>k<=1?p*(ind-d)/ind:p*(resto+d)/resto);
+  }
+  const bruto=base.map((p,k)=>al[k]>0?p*pl[k]/al[k]:0);
+  const s=bruto.reduce((a,b)=>a+b,0);
+  return bruto.map(v=>v/s);
+}
+function precoCmed(med,mg){
+  const p=E.preco;
+  const c=BD.precos.filter(x=>x.versao_id===p.versaoId&&x.medicamento===med&&Number(x.mg_por_frasco)===mg&&x.tipo_preco===p.tipo&&String(x.icms)===p.icms);
+  const l=c.find(x=>!!x.alc===!!p.alc)||c.find(x=>!x.alc);return l?Number(l.valor):null;
+}
+function precosEfetivos(){
+  const p=E.preco,b={a10:precoCmed('alteplase',10),a20:precoCmed('alteplase',20),a50:precoCmed('alteplase',50),t25:precoCmed('tenecteplase',25)},ef={};
+  Object.keys(b).forEach(k=>{const u=(p.custom[k]!==null&&p.custom[k]!==undefined)?p.custom[k]:b[k];const d=k[0]==='a'?p.descontoAlt:p.descontoTnk;ef[k]={cmed:b[k],final:u===null?null:u*(1-d)};});
+  return ef;
+}
+function entradasMotor(){
+  const e=clonar(E),ef=precosEfetivos();
+  e.precos={alteplase:{10:ef.a10.final,20:ef.a20.final,50:ef.a50.final},tenecteplase:ef.t25.final};
+  e._precos=ef;
+  const st=semTrombolise();
+  e.distribuicoes.sem_trombolise=st||[null,null,null,null,null,null,null];
+  return e;
+}
+
+/* Campos */
+function num(path,tipo,suf,ph){return `<div class="campo-num"><input inputmode="decimal" data-bind="${path}" data-tipo="${tipo}" aria-label="${esc(path)}" ${ph?`placeholder="${ph}"`:''}>${suf?`<span>${suf}</span>`:''}</div>`;}
+function sel(path,opcoes,tipo){return `<select class="sel" data-bind="${path}" data-tipo="${tipo||'txt'}">${opcoes.map(([v,r])=>`<option value="${v}">${esc(r)}</option>`).join('')}</select>`;}
+function campoRot(rot,campo){return `<div><label>${esc(rot)}</label>${campo}</div>`;}
+function formatar(inp){
+  const v=getPath(E,inp.dataset.bind),t=inp.dataset.tipo;
+  if(inp.tagName==='SELECT'){inp.value=String(v);}
+  else if(t==='txt'){inp.value=v??'';}
+  else if(v===null||v===undefined||v===''){inp.value='';}
+  else{const d={pct:1,pct2:2,pct3:3,num:0,num1:1,num2:2,moeda:2,moeda4:2}[t];inp.value=fmtNum(t.startsWith('pct')?v*100:v,d??2);}
+  const b=getPath(BASE,inp.dataset.bind),w=inp.closest('.campo-num')||inp;
+  const igual=v===b||(v!==null&&b!==null&&v!==undefined&&b!==undefined&&Math.abs(Number(v)-Number(b))<1e-9);
+  w.classList.toggle('alterado',!igual&&inp.tagName!=='SELECT'&&t!=='txt');
+}
+function ler(inp){
+  const t=inp.dataset.tipo,raw=inp.value;
+  if(t==='txt')return raw;if(t==='int')return Number(raw);if(t==='bool')return raw==='true';
+  const n=lerNumero(raw);
+  if(t==='moedaOpc')return n;
+  if(n===null)return inp.dataset.bind.startsWith('distribuicoes')?null:getPath(E,inp.dataset.bind);
+  return t.startsWith('pct')?n/100:n;
+}
+function formatarTodos(){$$('[data-bind]').forEach(formatar);}
+
+/* Vistas */
+function card(cab2,corpo,extra,pag){return `<section class="card ${extra||''}" ${pag?`data-pag="${pag}"`:''}>${cab2?`<div class="card-cabeca">${cab2}</div>`:''}${corpo}</section>`;}
+function titulo(q,t,dir){return `<h3>${q?`<span class="q">${q}</span>`:''}${t}</h3>${dir||''}`;}
+function vista(id,t,sub,grade,conteudo){return `<section class="vista" data-id="${id}" data-titulo="${esc(t)}" ${id==='memoria'?'data-sem-pager':''}><div class="vista-cabeca"><div><h2>${t}</h2><p>${sub}</p></div></div><div class="grade ${grade}">${conteudo}</div></section>`;}
+
+function montarVistas(){
+  const versoes=BD.versoes.map(v=>[v.id,`${v.ano} ${v.mes_referencia||''}`]);
+  const edDist=['alteplase','tenecteplase','ninds_placebo','ninds_alteplase','tm_alteplase','tm_tenecteplase'];
+  const CURTO={alteplase:'Alteplase',tenecteplase:'Tenecteplase',ninds_placebo:'NINDS placebo',ninds_alteplase:'NINDS alteplase',tm_alteplase:'Trombectomia, alteplase',tm_tenecteplase:'Trombectomia, tenecteplase'};
+
+  const html=
+  vista('visao','Visão geral','O tratamento é pago uma vez. A sequela é paga todos os anos.','g-visao',
+    `<section class="card heroi" data-pag="Resultado"><p class="frase" id="h-frase"></p><p class="apoio" id="h-apoio"></p>
+      <div class="heroi-numeros"><div><span>Tratamento por paciente</span><b id="h-trat"></b></div><div><span>Custos futuros por paciente</span><b id="h-fut"></b></div><div><span>Total por paciente em 5 anos</span><b id="h-tot"></b></div></div></section>
+     <div class="kpis" data-pag="Indicadores">
+      ${card('',`<span class="rotulo">Pacientes trombolisados por ano</span><span class="numero g" id="k-pac"></span><span class="sub" id="k-pac-s"></span>`,'kpi')}
+      ${card('',`<span class="rotulo">Custo do AVC em 5 anos no território</span><span class="numero g" id="k-tot"></span><span class="sub" id="k-tot-s"></span>`,'kpi')}
+      ${card('',`<span class="rotulo">Custo evitado pela menor sequela</span><span class="numero g" id="k-seq"></span><span class="sub">diferença entre tenecteplase e alteplase</span>`,'kpi')}
+      ${card('',`<span class="rotulo">Impacto orçamentário em 5 anos</span><span class="numero g" id="k-aio"></span><span class="sub" id="k-aio-s"></span>`,'kpi')}
+     </div>
+     ${card(titulo(1,'Custo acumulado por paciente trombolisado'),`<div class="grafico"><canvas id="g-acum"></canvas></div>`,'','Custo 5 anos')}
+     ${card(titulo('','Mensagens para o tomador de decisão'),`<ul class="mensagens" id="mensagens"></ul>`,'','Mensagens')}`)
+  +
+  vista('pacientes','Pacientes e território','Quantos pacientes geram os custos estimados.','g-pac',
+    card(titulo('','Território e volume de pacientes',`<div class="segmentado"><button data-modo="funil">Estimar</button><button data-modo="direto">Informar número</button></div>`),
+      `<div class="cheio" data-mostrar="funil" style="display:flex;flex-direction:column;gap:.5rem">
+        <div class="grade-2">
+          ${campoRot('Âmbito',sel('ambito',[['pais','Brasil'],['uf','Estado'],['municipio','Município'],['livre','Digitar população']]))}
+          ${campoRot('Estado',`<select class="sel" id="sel-uf"></select>`)}
+        </div>
+        <div id="linha-municipio" hidden>${campoRot('Município',`<select class="sel" id="sel-municipio"></select>`)}</div>
+        <div class="grade-2">
+          ${campoRot('População do território',num('funil.populacao','num','hab.'))}
+          ${campoRot('Peso médio do paciente',num('peso','num1','kg'))}
+        </div>
+        ${campoRot('Incidência anual de AVC',`<div class="grade-2">${sel('funil.incidencia_avc',[],'num')}${num('funil.incidencia_avc','pct3','%')}</div>`)}
+        ${campoRot('Proporção de AVC isquêmico',num('funil.prop_avci','pct','%'))}
+        ${campoRot('Casos de AVC isquêmico que recebem trombólise',`<div class="grade-2">${sel('funil.taxa_trombolise',TAXAS_TROMBOLISE.map(([v,r])=>[v,r]),'num')}${num('funil.taxa_trombolise','pct','%')}</div>`)}
+        <div class="funil" id="funil"></div>
+      </div>
+      <div class="cheio direto" data-mostrar="direto">
+        ${campoRot('Nome do território',`<input class="campo-txt" data-bind="territorio" data-tipo="txt" maxlength="120">`)}
+        <div class="linha-campo"><label>Pacientes trombolisados por ano</label>${num('direto.tratados','num','')}</div>
+        <div class="linha-campo"><label>Casos de AVC isquêmico por ano</label>${num('direto.elegiveis','num','')}</div>
+        <p class="nota">Os casos de AVC isquêmico que não recebem trombólise alimentam a análise de não trombolisar.</p>
+      </div>`,'','Território')
+    + `<div class="split" style="display:flex;flex-direction:column;gap:.85rem;min-height:0">`
+    + card(titulo('','Resumo do território'),
+      `<div class="grade-2" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        <div class="bloco-num"><span class="rotulo">Casos de AVCi por ano</span><span class="numero" id="p-eleg"></span></div>
+        <div class="bloco-num tnk"><span class="rotulo">Trombolisados</span><span class="numero" id="p-trat"></span></div>
+        <div class="bloco-num"><span class="rotulo">Sem trombólise</span><span class="numero" id="p-nao"></span></div></div>
+       <p class="nota" id="p-nota"></p>`,'','Resumo')
+    + card(titulo(1,'Custo total do AVC em 5 anos no território'),`<div class="grafico"><canvas id="g-q1"></canvas></div><table class="tab" id="t-q1" style="flex:none"></table>`,'cheio','Custo 5 anos')+`</div>`)
+  +
+  vista('tratamento','Custo do tratamento','Preço, dose e administração. Custo que ocorre uma única vez.','g-trat',
+    card(titulo('','Dose e frascos'),
+      `<div class="linha-campo"><label>Peso médio do paciente</label>${num('peso','num1','kg')}</div>
+       <div class="dose-bloco"><div class="topo-dose"><span class="marcador"><i style="background:var(--alt)"></i>Alteplase</span><b id="d-alt"></b></div><div class="frascos" id="fr-alt"></div><span class="nota" id="d-alt-n"></span></div>
+       <div class="dose-bloco tnk-bloco"><div class="topo-dose"><span class="marcador"><i style="background:var(--tnk)"></i>Tenecteplase</span><b id="d-tnk"></b></div><div class="frascos" id="fr-tnk"></div><span class="nota" id="d-tnk-n"></span></div>
+       <div class="grade-2">${campoRot('Alteplase',num('dose.alteplaseMgKg','num2','mg/kg'))}${campoRot('Máximo',num('dose.alteplaseMax','num','mg'))}${campoRot('Tenecteplase',num('dose.tenecteplaseMgKg','num2','mg/kg'))}${campoRot('Máximo',num('dose.tenecteplaseMax','num','mg'))}</div>`,'','Dose')
+    + card(titulo('','Preço dos medicamentos'),
+      `<div class="grade-2">
+         ${campoRot('Perspectiva',sel('perspectiva',[['SUS','SUS'],['Saúde suplementar','Saúde suplementar']]))}
+         ${campoRot('Tabela CMED',sel('preco.versaoId',versoes,'int'))}
+         ${campoRot('Tipo de preço',sel('preco.tipo',[['PF','PF (preço fábrica)'],['PMVG','PMVG (compra pública)']]))}
+         ${campoRot('ICMS',sel('preco.icms',ICMS))}
+       </div>
+       <table class="tab"><thead><tr><th>Frasco</th><th class="opc-m">CMED</th><th>Preço próprio</th><th>Preço usado</th></tr></thead><tbody>
+        ${[['a10','Alteplase 10 mg'],['a20','Alteplase 20 mg'],['a50','Alteplase 50 mg'],['t25','Tenecteplase 25 mg']].map(([k,r])=>`<tr><td>${r}</td><td class="opc-m" data-cmed="${k}"></td><td class="campo">${num('preco.custom.'+k,'moedaOpc','','CMED')}</td><td><b data-final="${k}"></b></td></tr>`).join('')}
+       </tbody></table>
+       <p class="nota so-movel">Deixe o preço próprio vazio para usar o valor da CMED, mostrado no campo.</p>
+       <div class="cheio so-desk" style="display:flex;flex-direction:column;justify-content:center;gap:.5rem"><span class="rotulo">Custo do medicamento por paciente</span>
+         <div class="grade-2"><div class="bloco-num"><span class="rotulo">Alteplase</span><span class="numero" id="med-alt"></span><span class="nota" id="med-alt-n"></span></div><div class="bloco-num tnk"><span class="rotulo">Tenecteplase</span><span class="numero" id="med-tnk"></span><span class="nota" id="med-tnk-n"></span></div></div>
+         <p class="texto" id="med-dif"></p></div>
+       <div class="grade-2">${campoRot('Desconto na alteplase',num('preco.descontoAlt','pct','%'))}${campoRot('Desconto na tenecteplase',num('preco.descontoTnk','pct','%'))}
+         ${campoRot('Fator dos custos assistenciais',num('fatorAssistencial','num2','x'))}${campoRot('Alíquota em Área de Livre Comércio',sel('preco.alc',[['false','Não'],['true','Sim']],'bool'))}</div>`,'','Preços')
+    + card(titulo('','Custo do tratamento por paciente'),
+      `<div class="op-lista"><div class="op-linha op-cab"><span class="op-nome">Administração da alteplase</span><span>Unitário (R$)</span><span>Quantidade</span><span class="op-total">Total</span></div>
+        ${E.operacionais.map((o,i)=>`<div class="op-linha"><span class="op-nome">${esc(o.item)}<small class="so-movel nota" data-op-m="${i}"></small></span>${num(`operacionais.${i}.custo_unitario`,'moeda4','')}${num(`operacionais.${i}.quantidade`,'num1',esc(o.unidade))}<span class="op-total" data-op="${i}"></span></div>`).join('')}
+       </div>
+       <p class="nota">A tenecteplase é aplicada em bolus: não há bomba de infusão, hora adicional de enfermagem nem ocupação de leito durante a infusão.</p>
+       <div class="cheio"></div>
+       <div class="comparador"><div class="legenda"><span><i style="background:#243B55"></i>Medicamento</span><span><i style="background:#94A3B8"></i>Administração</span></div><div id="comp-trat" class="comparador"></div></div>
+       <p class="texto" id="t-trat"></p>`,'','Custo'))
+  +
+  vista('funcional','Custo por sequela','Quanto custa cada nível de sequela ao longo de 5 anos.','g-func',
+    card(titulo(4,'Custo por paciente de acordo com a sequela',`<div class="segmentado"><button data-ed="custo" data-v="ver" aria-pressed="true">Ver</button><button data-ed="custo" data-v="editar">Editar dados</button></div>`),
+      `<div class="cheio" data-painel-ed="custo-ver" style="display:flex;flex-direction:column;gap:.4rem"><div class="grafico"><canvas id="g-mrs"></canvas></div><p class="texto" id="q4"></p></div>
+       <div class="cheio" data-painel-ed="custo-editar" style="display:none;flex-direction:column"><table class="tab ed-custos"><thead><tr><th>Estado</th><th>Agudo 90 dias (R$)</th><th>Anual (R$)</th><th>Morte/ano (%)</th></tr></thead><tbody>
+        ${ROT.map((r,k)=>`<tr><td>${r}</td><td class="campo">${num(`custosEstado.${k}.agudo`,'moeda','R$')}</td><td class="campo">${k<6?num(`custosEstado.${k}.anual`,'moeda','R$'):'<span class="nota">não se aplica</span>'}</td><td class="campo">${k<6?num(`mortalidade.${k}`,'pct','%'):''}</td></tr>`).join('')}
+       </tbody></table>
+       <div class="grade-2" style="grid-template-columns:repeat(4,1fr);margin-top:.6rem">${campoRot('Custo do óbito após 90 dias',num('custoObito','moeda','R$'))}${campoRot('Correção anual dos custos',num('inflacao','pct','%'))}${campoRot('Taxa de desconto anual',num('taxaDesconto','pct','%'))}${campoRot('Fração do ano 1 após 90 dias',num('fracaoAno1','num2',''))}</div></div>`,'card-mrs','Por sequela')
+    + card(titulo(5,'Custo de manter um paciente dependente'),`<div class="linha-kpi"><div><span class="numero" id="q5-n"></span><p class="nota">por ano, média de mRS 3 a 5</p></div><div style="text-align:right"><span class="numero" id="q5-n5"></span><p class="nota">em 5 anos, com evento agudo</p></div></div><div class="mini-grade" id="q5-g"></div>`,'','Dependência')
+    + card(titulo(6,'Economia quando o paciente fica sem sequela'),`<div class="linha-kpi"><div><span class="numero bom" id="q6-n"></span><p class="nota">por ano de cuidado</p></div><div style="text-align:right"><span class="numero bom" id="q6-n5"></span><p class="nota">em 5 anos</p></div></div><p class="texto" id="q11"></p>`,'','Independência')
+    + card(titulo(13,'Principais direcionadores de custo em 5 anos'),`<div class="grafico" style="flex:1.1"><canvas id="g-comp"></canvas></div><div class="lista-comp" id="l-comp"></div>`,'','Direcionadores'))
+  +
+  vista('semtrat','Custo de não trombolisar','O que o sistema gasta a mais quando o paciente elegível não é tratado.','g-sem',
+    card(titulo(9,'Quanto custa não trombolisar'),`<div class="cheio" id="q9" style="display:flex;flex-direction:column;gap:.5rem"></div>`,'card-q10','Não trombolisar')
+    + card(titulo(10,'Não tratar, tratar com alteplase ou com tenecteplase'),`<div class="cheio" id="q10" style="display:flex;flex-direction:column;gap:.5rem"></div>`,'','Comparação')
+    + card(titulo('','Como o braço sem trombólise é construído'),
+      `${campoRot('Método',sel('metodoSemTrombolise',METODOS,'num'))}
+       <div class="grade-2">${campoRot('Ganho de independência no cenário conservador',num('deltaConservador','pct','%'))}${campoRot('Fração de mRS 5 no grupo mRS 5-6 do NINDS',num('fracaoMrs5','pct','%'))}</div>
+       <table class="tab" id="t-sem" style="flex:none"></table>
+       <p class="nota" id="n-sem"></p>`,'','Método'))
+  +
+  vista('trombectomia','Trombectomia','Trombólise prévia à trombectomia: tenecteplase comparada à alteplase.','g-sem',
+    card(titulo(12,'Benefício econômico antes da trombectomia'),`<div class="cheio" id="q12" style="display:flex;flex-direction:column;gap:.5rem"></div>`,'card-q10','Resultado')
+    + card(titulo('','Recanalização e pacientes'),
+      `<div class="grade-2">${campoRot('Recanalização com alteplase',num('recanalizacao.alteplase','pct','%'))}${campoRot('Recanalização com tenecteplase',num('recanalizacao.tenecteplase','pct','%'))}</div>
+       ${campoRot('Trombolisados encaminhados à trombectomia',num('proporcaoTm','pct','%'))}
+       <div class="cheio"></div><div id="tm-num" style="display:flex;flex-direction:column;gap:.5rem"></div>`,'','Premissas')
+    + card(titulo('','Desfechos que explicam a diferença'),`<table class="tab" id="t-tm"></table><p class="nota">Fontes: Campbell 2018 e metanálise de Zhang 2025. O custo do procedimento de trombectomia é igual nos dois braços e não altera a diferença.</p>`,'','Desfechos'))
+  +
+  vista('agregada','Visão agregada','Resultado do GRADE: mais pacientes sem sequela, menos custo assistencial.','g-agr',
+    card(titulo('','Custo por paciente na visão agregada'),`<div class="grafico"><canvas id="g-agr"></canvas></div>`,'','Resultado')
+    + `<div class="split" style="display:flex;flex-direction:column;gap:.85rem;min-height:0">`
+    + card(titulo('','Diferença'),`<div id="agr-num" style="display:flex;flex-direction:column;gap:.5rem"></div>`,'','Diferença')
+    + card(titulo('','Premissas da visão agregada'),
+      `<div class="grade-2">${campoRot('Sem sequela com alteplase',num('agregado.indAlteplase','pct','%'))}${campoRot('Sem sequela com tenecteplase',num('agregado.indTenecteplase','pct','%'))}
+        ${campoRot('Custo anual com sequela',num('agregado.custoComSequela','moeda','R$'))}${campoRot('Custo anual sem sequela',num('agregado.custoSemSequela','moeda','R$'))}</div>
+       <p class="nota">Independência funcional (mRS 0 a 1) do GRADE de certeza alta: 50,6% com alteplase e 53,2% com tenecteplase. O sobrevivente sem sequela não gera custo assistencial atribuível ao AVC. O custo anual com sequela é a média ponderada dos estados mRS 2 a 5 até a inclusão dos custos de Diegoli.</p>`,'','Premissas')+`</div>`)
+  +
+  vista('orcamento','Impacto orçamentário','Troca progressiva de alteplase por tenecteplase, com novas coortes a cada ano.','g-orc',
+    card(titulo(2,'Impacto no orçamento do sistema por ano'),`<div class="grafico"><canvas id="g-aio"></canvas></div>`,'','Por ano')
+    + `<div class="pilha-kpi" data-pag="Totais">${card('',`<span class="rotulo">Impacto total em 5 anos</span><span class="numero g" id="o-tot"></span><span class="nota" id="o-tot-s"></span>`)}${card('',`<span class="rotulo">Somente medicamento e administração</span><span class="numero" id="o-trat"></span><span class="nota">sem considerar desfechos</span>`)}${card('',`<span class="rotulo">Crescimento anual dos casos</span>${num('crescimentoCasos','pct','%')}<span class="nota">População do território: crescimento de ${''}</span>${num('crescimentoPop','pct2','%')}`)}</div>`
+    + card('',`<table class="tab so-desk" id="t-aio"></table><div class="aio-m so-movel" id="t-aio-m"></div><p class="nota">Participação da tenecteplase editável em cada ano. Valores sem desconto, com correção anual dos custos assistenciais.</p>`,'card-tab','Participação'))
+  +
+  vista('memoria','Premissas e memória de cálculo','Cada número pode ser conferido: fórmulas, premissas de desfecho e fontes.','g-mem',
+    `<div class="cab-mem" style="display:flex;justify-content:space-between;align-items:center;gap:1rem"><div class="segmentado subabas">${[['metodo','Método'],['desfechos','Desfechos'],['trat','Tratamento'],['estado','Custo por estado'],['coorte','Coorte'],['fontes','Fontes']].map(([k,r],i)=>`<button data-mem="${k}" aria-pressed="${i===0}">${r}</button>`).join('')}</div><button class="btn" id="btn-csv">Baixar CSV</button></div>
+     <div class="cheio" style="display:flex;min-height:0">
+      <div class="painel-mem ativo" data-pm="metodo" style="grid-template-columns:1fr 1fr">${card('',`<div id="m-metodo-a" style="display:flex;flex-direction:column;gap:.5rem"></div>`)}${card('',`<div id="m-metodo-b" style="display:flex;flex-direction:column;gap:.5rem"></div>`)}</div>
+      <div class="painel-mem" data-pm="desfechos">${card(titulo('','Distribuições de mRS em 90 dias que alimentam os custos'),
+        `<div class="dist-m so-movel">${campoRot('Estratégia',`<select class="sel" id="dist-m-sel">${edDist.map(x=>`<option value="${x}">${CURTO[x]}</option>`).join('')}</select>`)}
+          ${edDist.map((x,i)=>`<div class="dist-m-bloco" data-dm="${x}" ${i?'hidden':''}><div class="grade-dist">${[0,1,2,3,4,5,6].map(k=>`<div><label>${ROT[k]}</label>${num(`distribuicoes.${x}.${k}`,'pct','%')}</div>`).join('')}<div><label>Soma</label><div style="height:2.75rem;display:grid;place-items:center;font-weight:800" data-soma-m="${x}"></div></div></div></div>`).join('')}</div>
+         <table class="tab so-desk"><thead><tr><th>Estratégia</th>${ROT.map(r=>`<th>${r}</th>`).join('')}<th>Soma</th></tr></thead><tbody>
+          ${edDist.map(s=>`<tr><td style="font-size:.74rem;white-space:nowrap">${CURTO[s]}</td>${[0,1,2,3,4,5,6].map(k=>`<td class="campo">${num(`distribuicoes.${s}.${k}`,'pct','')}</td>`).join('')}<td data-soma="${s}"></td></tr>`).join('')}
+         </tbody></table>
+         <p class="nota so-desk">Valores em %. Somas diferentes de 100% são normalizadas no cálculo. As distribuições de desfecho são premissas: a ferramenta apresenta apenas os custos que decorrem delas.</p>`)}</div>
+      <div class="painel-mem" data-pm="trat" style="grid-template-columns:1fr 1fr"><div id="m-trat-a" class="card"></div><div id="m-trat-b" class="card"></div></div>
+      <div class="painel-mem" data-pm="estado">${card('',`<table class="tab" id="m-estado"></table>`)}</div>
+      <div class="painel-mem" data-pm="coorte">${card(`<h3>Coorte por paciente trombolisado</h3><div class="segmentado">${['alteplase','tenecteplase','sem_trombolise'].map(s=>`<button data-coorte="${s}" aria-pressed="${s==='tenecteplase'}">${NOME[s]}</button>`).join('')}</div>`,`<table class="tab" id="m-coorte"></table>`)}</div>
+      <div class="painel-mem" data-pm="fontes">${card(`<h3>Parâmetros, fontes e situação</h3><div class="paginacao"><span id="pg-info"></span><button class="btn" id="pg-ant">Anterior</button><button class="btn" id="pg-prox">Próxima</button></div>`,`<table class="tab" id="m-fontes"></table>`)}</div>
+     </div>`);
+  $('#palco').innerHTML=html+'<div class="aviso" id="aviso" hidden></div>';
+  const selInc=$('[data-bind="funil.incidencia_avc"][data-tipo="num"]');
+  selInc.innerHTML=[[E.funil.incidencia_avc,'105,4 por 100.000 (Cabral, Joinville)'],[E.incidenciaAlternativa,'104,8 por 100.000 (Ouriques Martins)']].map(([v,r])=>`<option value="${v}">${r}</option>`).join('');
+}
+
+function ligar(){
+  const palco=$('#palco');
+  palco.addEventListener('change',ev=>{const i=ev.target.closest('[data-bind]');if(!i)return;setPath(E,i.dataset.bind,ler(i));$$(`[data-bind="${CSS.escape(i.dataset.bind)}"]`).forEach(formatar);recalcular();});
+  palco.addEventListener('keydown',ev=>{if(ev.key==='Enter'&&ev.target.matches('input[data-bind]'))ev.target.blur();});
+  $$('.nav').forEach(b=>b.addEventListener('click',()=>irPara(b.dataset.vista)));
+  $$('.nav-inferior button').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.vi==='mais')$('#dlg-mais').showModal();else irPara(b.dataset.vi);}));
+  $$('[data-ir-m]').forEach(b=>b.addEventListener('click',()=>{$('#dlg-mais').close();irPara(b.dataset.irM);}));
+  const acoes={salvar:'#btn-salvar',abrir:'#btn-abrir',restaurar:'#btn-restaurar',pendencias:'#btn-pendencias'};
+  $$('[data-acao]').forEach(b=>b.addEventListener('click',()=>{$('#dlg-mais').close();$(acoes[b.dataset.acao]).click();}));
+  $('#btn-menu').addEventListener('click',()=>$('#dlg-mais').showModal());
+  $('#faixa').addEventListener('click',()=>irPara('visao'));
+  $('#dist-m-sel').addEventListener('change',ev=>$$('[data-dm]').forEach(b=>b.hidden=b.dataset.dm!==ev.target.value));
+  $$('[data-modo]').forEach(b=>b.addEventListener('click',()=>{E.modo=b.dataset.modo;modo();recalcular();}));
+  $$('[data-ed]').forEach(b=>b.addEventListener('click',()=>{const g=b.dataset.ed;$$(`[data-ed="${g}"]`).forEach(x=>x.setAttribute('aria-pressed',String(x===b)));$$(`[data-painel-ed^="${g}-"]`).forEach(p=>{p.style.display=p.dataset.painelEd===`${g}-${b.dataset.v}`?'flex':'none';});redimensionar();}));
+  $$('[data-mem]').forEach(b=>b.addEventListener('click',()=>{$$('[data-mem]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));$$('.painel-mem').forEach(p=>p.classList.toggle('ativo',p.dataset.pm===b.dataset.mem));redimensionar();}));
+  $$('[data-coorte]').forEach(b=>b.addEventListener('click',()=>{modoCoorte=b.dataset.coorte;$$('[data-coorte]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderCoorte();}));
+  $('#pg-ant').addEventListener('click',()=>{paginaFontes=Math.max(0,paginaFontes-1);renderFontes();});
+  $('#pg-prox').addEventListener('click',()=>{paginaFontes++;renderFontes();});
+  $('#btn-csv').addEventListener('click',baixarCsv);
+  $('#btn-restaurar').addEventListener('click',()=>{E=clonar(BASE);formatarTodos();modo();montarUf();recalcular();});
+  $('#btn-salvar').addEventListener('click',()=>{$('#sv-uf').innerHTML='<option value="">Não se aplica</option>'+UFS.map(u=>`<option ${u===E.uf?'selected':''}>${u}</option>`).join('');$('#sv-nome').value=E.territorio?`Cenário ${E.territorio}`:'';$('#sv-msg').textContent='';$('#dlg-salvar').showModal();});
+  $('#sv-confirmar').addEventListener('click',salvar);
+  $('#btn-abrir').addEventListener('click',()=>{$('#sel-cenario').innerHTML=BD.cenarios.length?BD.cenarios.map(c=>`<option value="${c.id}">${esc(c.nome)} | ${esc(c.territorio_nome||c.territorio_tipo||'')}${c.uf?' '+esc(c.uf):''} | ${new Date(c.criado_em).toLocaleDateString('pt-BR')}</option>`).join(''):'<option disabled>Nenhum cenário salvo</option>';$('#ab-msg').textContent='';$('#dlg-abrir').showModal();});
+  $('#ab-confirmar').addEventListener('click',abrir);
+  $$('[data-fechar]').forEach(b=>b.addEventListener('click',()=>b.closest('dialog').close()));
+  $('#sel-uf').addEventListener('change',()=>{E.uf=$('#sel-uf').value;aplicarTerritorio();});
+  $('#sel-municipio').addEventListener('change',()=>aplicarTerritorio());
+  montarUf();formatarTodos();modo();montarPagers();ligarGestos();
+}
+function montarUf(){
+  $('#sel-uf').innerHTML=BD.territorios.filter(t=>t.nivel==='uf').map(t=>`<option value="${t.uf}" ${t.uf===E.uf?'selected':''}>${esc(t.nome)}</option>`).join('');
+}
+async function aplicarTerritorio(){
+  const amb=E.ambito;
+  $('#linha-municipio').hidden=amb!=='municipio';
+  $('#sel-uf').closest('div').hidden=(amb==='pais'||amb==='livre');
+  if(amb==='pais'){const br=BD.territorios.find(t=>t.nivel==='pais');if(br){E.funil.populacao=Number(br.populacao);E.territorio='Brasil';}}
+  else if(amb==='uf'){const uf=BD.territorios.find(t=>t.nivel==='uf'&&t.uf===($('#sel-uf').value||E.uf));if(uf){E.funil.populacao=Number(uf.populacao);E.territorio=uf.nome;E.uf=uf.uf;}}
+  else if(amb==='municipio'){
+    const uf=$('#sel-uf').value||E.uf||'SP';E.uf=uf;
+    if(!municipios.length||municipios[0].uf!==uf){
+      $('#sel-municipio').innerHTML='<option>Carregando</option>';
+      try{municipios=await api('ibge_populacao',`select=nome,uf,populacao&nivel=eq.municipio&uf=eq.${encodeURIComponent(uf)}&order=nome`);}catch(err){municipios=[];}
+      $('#sel-municipio').innerHTML=municipios.map(m=>`<option value="${esc(m.nome)}">${esc(m.nome)}</option>`).join('');
+    }
+    const m=municipios.find(x=>x.nome===$('#sel-municipio').value)||municipios[0];
+    if(m){E.funil.populacao=Number(m.populacao);E.territorio=`${m.nome} (${uf})`;}
+  }
+  formatarTodos();recalcular();
+}
+function irPara(v,pag){
+  $$('.nav').forEach(b=>b.setAttribute('aria-current',String(b.dataset.vista===v)));
+  const principais=['visao','pacientes','tratamento','semtrat'];
+  $$('.nav-inferior button').forEach(b=>b.setAttribute('aria-current',String(b.dataset.vi===v||(b.dataset.vi==='mais'&&!principais.includes(v)))));
+  $$('.vista').forEach(s=>s.classList.toggle('ativa',s.dataset.id===v));
+  const vs=$(`.vista[data-id="${v}"]`);$('#titulo-movel').textContent=vs?vs.dataset.titulo:'';
+  if(pag!==undefined)mostrarPagina(v,pag);
+  redimensionar();
+}
+const paginaAtual={};
+function montarPagers(){
+  $$('.vista:not([data-sem-pager])').forEach(vs=>{
+    const pags=$$('[data-pag]',vs);if(!pags.length)return;
+    const pg=document.createElement('div');pg.className='pager so-movel';
+    pg.innerHTML=pags.map((p,i)=>`<button type="button" data-pg="${i}">${esc(p.dataset.pag)}</button>`).join('');
+    vs.insertBefore(pg,vs.querySelector('.grade'));
+    pg.addEventListener('click',ev=>{const b=ev.target.closest('[data-pg]');if(b)mostrarPagina(vs.dataset.id,Number(b.dataset.pg));});
+    mostrarPagina(vs.dataset.id,0);
+  });
+}
+function mostrarPagina(v,i){
+  const vs=$(`.vista[data-id="${v}"]`);if(!vs)return;const pags=$$('[data-pag]',vs);if(!pags.length)return;
+  if(typeof i==='string')i=Math.max(0,pags.findIndex(p=>p.dataset.pag===i));
+  i=Math.max(0,Math.min(pags.length-1,i));paginaAtual[v]=i;
+  pags.forEach((p,k)=>p.classList.toggle('pag-ativa',k===i));
+  $$('.pager [data-pg]',vs).forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.pg)===i)));
+  redimensionar();
+}
+function ligarGestos(){
+  let x0=null,y0=null,alvo=null;
+  $('#palco').addEventListener('touchstart',ev=>{if(!movel())return;const t=ev.touches[0];x0=t.clientX;y0=t.clientY;alvo=ev.target;},{passive:true});
+  $('#palco').addEventListener('touchend',ev=>{
+    if(x0===null)return;const t=ev.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;
+    if(alvo&&alvo.closest('input,select,canvas,.tab'))return;
+    if(Math.abs(dx)>70&&Math.abs(dy)<45){const v=$('.vista.ativa');if(!v||v.hasAttribute('data-sem-pager'))return;mostrarPagina(v.dataset.id,(paginaAtual[v.dataset.id]||0)+(dx<0?1:-1));}
+  },{passive:true});
+}
+function modo(){$$('[data-modo]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.modo===E.modo)));$$('[data-mostrar]').forEach(d=>d.style.display=d.dataset.mostrar===E.modo?'flex':'none');}
+function redimensionar(){requestAnimationFrame(()=>Object.values(G).forEach(g=>g.resize()));}
+const mqMovel=matchMedia('(max-width: 899px), (max-height: 559px)');
+function aplicarModoTela(){
+  const m=mqMovel.matches;
+  if(movel()!==m){document.documentElement.classList.toggle('movel',m);Chart.defaults.font.size=m?10.5:11;if(R)executar();}
+  redimensionar();
+}
+
+/* Graficos */
+Chart.defaults.font.family='"Manrope",system-ui,sans-serif';Chart.defaults.font.size=11;Chart.defaults.color=css('--tinta-2');
+Chart.defaults.maintainAspectRatio=false;Chart.defaults.animation=false;Chart.defaults.scale.ticks.maxRotation=0;Chart.defaults.scale.ticks.autoSkipPadding=12;
+Chart.defaults.plugins.legend.labels.boxWidth=9;Chart.defaults.plugins.legend.labels.boxHeight=9;Chart.defaults.plugins.legend.labels.padding=10;
+Chart.defaults.plugins.tooltip.backgroundColor='#08312A';Chart.defaults.plugins.tooltip.padding=9;Chart.defaults.plugins.tooltip.cornerRadius=8;
+function graf(id,cfg){if(G[id])G[id].destroy();const el=document.getElementById(id);if(el)G[id]=new Chart(el,cfg);}
+const eixoR={ticks:{callback:v=>'R$ '+curto(v)},grid:{color:'#EDF1F6'},border:{display:false}};
+const semGrade={grid:{display:false},border:{display:false}};
+const ttR=eixo=>({callbacks:{label:c=>`${c.dataset.label||c.label}: ${sm(eixo==='x'?c.parsed.x:c.parsed.y)}`}});
+
+let timer;function recalcular(){clearTimeout(timer);timer=setTimeout(executar,50);}
+function executar(){
+  const av=$('#aviso');
+  try{
+    const e=entradasMotor();
+    if(['alteplase','tenecteplase'].some(s=>e.distribuicoes[s].some(v=>v===null)))throw new Error('Complete as distribuições de mRS de alteplase e tenecteplase em Premissas e memória.');
+    if(e.precos.tenecteplase===null||[10,20,50].some(m=>e.precos.alteplase[m]===null))throw new Error('Falta preço para alguma apresentação na tabela CMED selecionada. Informe um preço próprio em Custo do tratamento.');
+    R=Motor.calcular(e);R._e=e;av.hidden=true;render(e);
+  }catch(err){av.textContent=err.message;av.hidden=false;console.error(err);}
+}
+function frascosHtml(lista){return lista.map(([n,mg,max])=>Array.from({length:n},()=>`<span class="frasco"><i style="height:${(1.3+2.2*mg/max).toFixed(2)}rem"></i><small>${mg} mg</small></span>`).join('')).join('');}
+function frascosTexto(c){const p=[];if(c.f50)p.push(`${c.f50} de 50 mg`);if(c.f20)p.push(`${c.f20} de 20 mg`);if(c.f10)p.push(`${c.f10} de 10 mg`);return p.join(' + ');}
+
+function render(e){
+  const ca=R.coortes.alteplase,ct=R.coortes.tenecteplase,cs=R.coortes.sem_trombolise,pac=R.pacientes,d=R.tnkVsAlt,dp=R.tnkVsAltPop,N=pac.tratados,H=e.horizonte;
+  const coortes=[ca,ct].concat(cs?[cs]:[]);
+  const versao=BD.versoes.find(v=>v.id===E.preco.versaoId)||{};
+  $('#chip-territorio').textContent=E.territorio||'Sem nome';$('#chip-pacientes').textContent=fmtNum(N,0);
+  $('#chip-perspectiva').textContent=`${E.perspectiva} | ${E.preco.tipo} | CMED ${versao.ano||''}`;
+  const eco=-dp.total,fut=R.custoFuturoEvitado;
+  $('#h-frase').textContent=eco>=0?`${grande(eco)} em custos do AVC evitados em ${H} anos com tenecteplase.`:`${grande(-eco)} a mais em custos do AVC em ${H} anos com tenecteplase.`;
+  $('#h-apoio').textContent=`${E.territorio?E.territorio+'. ':''}${fmtNum(N,0)} pacientes trombolisados por ano. Inclui tratamento, evento agudo e cuidado dos anos seguintes, na perspectiva ${E.perspectiva}.`;
+  const hb=(id,v)=>{const el=$(id);el.textContent=sm(v);el.className=v<0?'bom':(v>0?'ruim':'');};
+  hb('#h-trat',d.tratamento);hb('#h-fut',fut);hb('#h-tot',d.total);
+  $('#k-pac').textContent=fmtNum(N,0);$('#k-pac-s').textContent=`de ${fmtNum(pac.elegiveis,0)} casos de AVC isquêmico (${pct(pac.elegiveis>0?N/pac.elegiveis:0,1)})`;
+  $('#k-tot').textContent=grande(ct.desc.total*N);$('#k-tot-s').textContent=`com tenecteplase; ${grande(ca.desc.total*N)} com alteplase`;
+  $('#k-seq').textContent=grande(Math.abs(dp.incapacidade));$('#k-seq').className='numero g '+cls(dp.incapacidade);
+  $('#k-aio').textContent=(R.impacto.acumImpacto<0?'-':'+')+grande(R.impacto.acumImpacto);$('#k-aio').className='numero g '+cls(R.impacto.acumImpacto);
+  $('#k-aio-s').textContent='com adoção progressiva da tenecteplase';
+  $('#fr-a').textContent=`Tenecteplase em ${H} anos | ${E.territorio||'Território'} | ${fmtNum(N,0)} pacientes/ano`;
+  $('#fr-b').textContent=eco>=0?`${grande(eco)} evitados`:`${grande(-eco)} a mais`;
+  $('#fr-c').textContent=sm(d.total);
+
+  const labs=['Tratamento'].concat(Array.from({length:H},(_,i)=>'Ano '+(i+1)));
+  graf('g-acum',{type:'line',data:{labels:labs,datasets:coortes.map(c=>{let a=c.desc.tratamento;const p=[a];c.anos.forEach(x=>{a+=(x.agudo+x.anual+x.obito)*x.fator;p.push(a);});return{label:NOME[c.estrategia],data:p,borderColor:COR[c.estrategia],backgroundColor:COR[c.estrategia],borderWidth:c.estrategia==='tenecteplase'?3:2,pointRadius:2.5};})},options:{plugins:{legend:{position:'top',align:'end'},tooltip:ttR('y')},scales:{y:eixoR,x:semGrade}}});
+
+  const msgs=[];
+  msgs.push(eco>=0?`${grande(eco)} em custos associados ao AVC são evitados em ${H} anos no território.`:`Nas premissas atuais, a tenecteplase aumenta os custos em ${grande(-eco)} em ${H} anos.`);
+  msgs.push(`Cada paciente que fica sem sequela em vez de dependente evita ${moeda0(R.economiaIndependencia.cinco)} em ${H} anos.`);
+  msgs.push(`O tratamento representa ${pct(ct.desc.tratamento/ct.desc.total,1)} do custo em ${H} anos. O restante vem do evento agudo e do cuidado da sequela.`);
+  if(cs&&R.custoNaoTratarPop&&pac.naoTratados>0)msgs.push(`Os ${fmtNum(pac.naoTratados,0)} pacientes por ano que não recebem trombólise custam ${grande(R.custoNaoTratarPop.tenecteplase)} a mais em ${H} anos do que custariam se tratados.`);
+  else if(R.agregado)msgs.push(`Na visão agregada, ${fmtNum(R.agregado.semSequelaExtra,0)} pacientes a mais por ano ficam sem sequela com tenecteplase.`);
+  $('#mensagens').innerHTML=msgs.slice(0,4).map(m=>`<li>${esc(m)}</li>`).join('');
+
+  /* Pacientes */
+  if(pac.funil){
+    const base=pac.funil.etapas[1].n||1;
+    $('#funil').innerHTML=pac.funil.etapas.slice(1).map(s=>`<div class="funil-linha ${s.chave==='taxa_trombolise'?'chave':''}"><span class="nome">${esc(s.rotulo)} <span class="nota">(${pct(s.taxa,s.taxa<0.01?3:1)})</span></span><div class="funil-barra"><span style="width:${Math.max(1,100*s.n/base)}%"></span></div><b>${fmtNum(s.n,0)}</b></div>`).join('');
+  } else $('#funil').innerHTML='';
+  $('#p-eleg').textContent=fmtNum(pac.elegiveis,0);$('#p-trat').textContent=fmtNum(pac.tratados,0);$('#p-nao').textContent=fmtNum(pac.naoTratados,0);
+  $('#p-nota').textContent=E.modo==='funil'?`Estimativa para ${E.territorio}. População de ${fmtNum(E.funil.populacao,0)} habitantes.`:'Números informados diretamente.';
+  graf('g-q1',{type:'bar',data:{labels:coortes.map(c=>NOME[c.estrategia]),datasets:[['tratamento','Tratamento','#243B55'],['agudo','Evento agudo','#4F9E8C'],['anual','Cuidado pós-AVC','#B7DED2'],['obito','Óbitos após 90 dias','#94A3B8']].map(([k,r,c])=>({label:r,data:coortes.map(x=>x.desc[k]*N),backgroundColor:c,barPercentage:.7}))},options:{indexAxis:'y',plugins:{legend:{position:'top',align:'start'},tooltip:ttR('x')},scales:{x:{stacked:true,...eixoR},y:{stacked:true,...semGrade}}}});
+  $('#t-q1').innerHTML=`<thead><tr><th>Estratégia</th><th>Por paciente</th><th>No território</th><th class="opc-m">Custo anual médio</th></tr></thead><tbody>${coortes.map(c=>`<tr><td><span class="marcador"><i style="background:${COR[c.estrategia]}"></i>${NOME[c.estrategia]}</span></td><td>${moeda0(c.desc.total)}</td><td><b>${grande(c.desc.total*N)}</b></td><td class="opc-m">${moeda0(c.custoAnualMedio)}</td></tr>`).join('')}</tbody>`;
+
+  /* Tratamento */
+  const ma=ca.tratamento.medicamento,mt=ct.tratamento.medicamento;
+  $('#d-alt').textContent=`${fmtNum(ma.dose,1)} mg`;$('#d-tnk').textContent=`${fmtNum(mt.dose,2)} mg`;
+  $('#fr-alt').innerHTML=frascosHtml([[ma.combo.f50,50,50],[ma.combo.f20,20,50],[ma.combo.f10,10,50]]);
+  $('#fr-tnk').innerHTML=frascosHtml([[mt.frascos,25,50]]);
+  $('#d-alt-n').textContent=`Bolus de ${fmtNum(ma.bolus,2)} mg e infusão de 1 hora com ${fmtNum(ma.infusao,2)} mg. Sobra ${fmtNum(ma.combo.desperdicio,1)} mg.`;
+  $('#d-tnk-n').textContent=`Bolus único. Sobra ${fmtNum(mt.desperdicio,2)} mg.`;
+  Object.entries(e._precos).forEach(([k,v])=>{$(`[data-cmed="${k}"]`).textContent=v.cmed===null?'sem preço':fmtNum(v.cmed,2);const ip=$(`[data-bind="preco.custom.${k}"]`);if(ip)ip.placeholder=v.cmed===null?'sem preço':(movel()?'CMED '+fmtNum(v.cmed,2):'CMED');$(`[data-final="${k}"]`).textContent=v.final===null?'n/d':fmtNum(v.final,2);});
+  E.operacionais.forEach((o,i)=>{const t=fmtNum(o.custo_unitario*o.quantidade,2);const el=$(`[data-op="${i}"]`);if(el)el.textContent=t;const em=$(`[data-op-m="${i}"]`);if(em)em.textContent='Total R$ '+t;});
+  $('#med-alt').textContent=moeda(ma.custo);$('#med-alt-n').textContent=frascosTexto(ma.combo);$('#med-tnk').textContent=moeda(mt.custo);$('#med-tnk-n').textContent=`${mt.frascos} de 25 mg`;
+  const difOp=ct.tratamento.operacional.custo-ca.tratamento.operacional.custo;
+  $('#med-dif').innerHTML=`A tenecteplase custa <b class="${cls(mt.custo-ma.custo)}">${sm(mt.custo-ma.custo)}</b> por paciente em medicamento e <b class="${cls(difOp)}">${sm(difOp)}</b> em administração.`;
+  const maxT=Math.max(ca.tratamento.total,ct.tratamento.total)||1;
+  $('#comp-trat').innerHTML=[ca,ct].map(c=>`<div class="barra-comp"><span class="marcador"><i style="background:${COR[c.estrategia]}"></i>${NOME[c.estrategia]}</span><div class="trilha"><span style="width:${100*c.tratamento.medicamento.custo/maxT}%;background:#243B55"></span><span style="width:${100*c.tratamento.operacional.custo/maxT}%;background:#94A3B8"></span></div><b>${moeda(c.tratamento.total)}</b></div>`).join('');
+  $('#t-trat').innerHTML=`Diferença por paciente com tenecteplase: <b class="${cls(d.tratamento)}" style="font-size:1.1rem">${sm(d.tratamento)}</b>`;
+
+  /* Custo por sequela */
+  const pe=ca.porEstado;
+  graf('g-mrs',{type:'bar',data:{labels:ROT,datasets:[{type:'bar',label:`Custo em ${H} anos`,data:pe.map(x=>x.desc.total),backgroundColor:COR_MRS,borderRadius:6,barPercentage:.7,yAxisID:'y',order:2},{type:'line',label:'Custo anual',data:e.custosEstado.map((c,k)=>k<6?c.anual:null),borderColor:'#08312A',backgroundColor:'#08312A',pointRadius:3.5,borderWidth:2,yAxisID:'y2',order:1}]},options:{plugins:{legend:{position:'top',align:'end'},tooltip:ttR('y')},scales:{y:{...eixoR,title:{display:!movel(),text:`Em ${H} anos`}},y2:{position:'right',ticks:{callback:v=>'R$ '+curto(v)},grid:{display:false},border:{display:false}},x:semGrade}}});
+  $('#q4').innerHTML=`Por ano, um paciente em mRS 4 custa <b>${moeda0(e.custosEstado[4].anual)}</b> e um em mRS 1 custa <b>${moeda0(e.custosEstado[1].anual)}</b>. Em ${H} anos, a diferença entre mRS 5 e mRS 0 chega a <b>${moeda0(pe[5].desc.total-pe[0].desc.total)}</b> por paciente.`;
+  $('#q5-n').textContent=moeda0(R.dependencia.custoAnual);$('#q5-n5').textContent=moeda0(R.dependencia.custo5anos);
+  $('#q5-g').innerHTML=R.dependencia.porEstado.map(x=>`<div><span>mRS ${x.mrs}</span><b>${moeda0(x.cinco)}</b></div>`).join('');
+  $('#q6-n').textContent=moeda0(R.economiaIndependencia.anual);$('#q6-n5').textContent=moeda0(R.economiaIndependencia.cinco);
+  const s11=R.sensibilidadeDesfecho.porPontoPercentual;
+  $('#q11').innerHTML=`Cada 1 ponto percentual de pacientes que deixa de ser dependente (mRS 3 a 5) e passa a ficar sem sequela (mRS 0 a 1) ${s11<0?'reduz':'aumenta'} o custo em <b>${moeda(Math.abs(s11))}</b> por paciente tratado, ou <b>${grande(Math.abs(s11*N))}</b> em ${H} anos no território.`;
+  const comps=[['Evento agudo (90 dias)',ct.desc.agudo,'#4F9E8C'],['Cuidado de dependentes (mRS 3 a 5)',ct.anualPorGrupo.dependentes,'#A4561F'],['Tratamento trombolítico',ct.desc.tratamento,'#243B55'],['Cuidado sem sequela (mRS 0 a 1)',ct.anualPorGrupo.independentes,'#93CBBB'],['Cuidado com sequela leve (mRS 2)',ct.anualPorGrupo.leve,'#E9C48A'],['Óbitos após 90 dias',ct.desc.obito,'#94A3B8']].filter(c=>c[1]>0).sort((a,b)=>b[1]-a[1]);
+  graf('g-comp',{type:'doughnut',data:{labels:comps.map(c=>c[0]),datasets:[{data:comps.map(c=>c[1]),backgroundColor:comps.map(c=>c[2]),borderWidth:2,borderColor:'#fff'}]},options:{cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${moeda(c.parsed)}`}}}}});
+  $('#l-comp').innerHTML=comps.map(c=>`<div><i style="background:${c[2]}"></i><span style="text-align:left">${c[0]}</span><b>${moeda0(c[1])}</b><span>${pct(c[1]/ct.desc.total)}</span></div>`).join('');
+
+  /* Nao trombolisar */
+  if(cs){
+    const v9=R.custoNaoTratarPop.tenecteplase, porPac=R.custoNaoTratarPorPaciente, nn=R.trombolisarVsNao;
+    const liq=x=>({dif:-porPac[x], ind:nn[x].indExtra, ob:nn[x].obitosEvitados});
+    const L1=liq('alteplase'), L2=liq('tenecteplase');
+    const porInd=x=>x.ind>0?x.dif/x.ind:null, porOb=x=>x.ob>0?x.dif/x.ob:null;
+    const cabecalho = v9>0
+      ? `<span class="numero g ruim">${grande(v9)}</span><p class="texto">A mais em ${H} anos porque ${fmtNum(pac.naoTratados,0)} pacientes com AVC isquêmico por ano ficam sem trombólise no território.</p>`
+      : `<span class="numero g">${grande(Math.abs(v9))}</span><p class="texto">É quanto o sistema deixa de gastar em ${H} anos por não trombolisar ${fmtNum(pac.naoTratados,0)} pacientes por ano. Em troca, deixa de evitar <b>${fmtNum(L2.ind*pac.naoTratados,0)}</b> pacientes com sequela e <b>${fmtNum(L2.ob*pac.naoTratados,0)}</b> óbitos por ano. Com os custos assistenciais atuais, a trombólise não se paga apenas com a redução de sequela.</p>`;
+    $('#q9').innerHTML=cabecalho+
+      `<div class="mini-grade" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <div><span>Custo líquido por paciente, alteplase</span><b class="${cls(L1.dif)}">${sm(L1.dif)}</b></div>
+        <div><span>Custo líquido por paciente, tenecteplase</span><b class="${cls(L2.dif)}">${sm(L2.dif)}</b></div>
+        <div><span>Custo por paciente sem sequela a mais</span><b>${porInd(L2)!==null?sm(porInd(L2)):'n/d'}</b></div>
+        <div><span>Custo por óbito evitado</span><b>${porOb(L2)!==null?sm(porOb(L2)):'n/d'}</b></div>
+        <div><span>Pacientes sem sequela a mais por ano, se todos fossem tratados</span><b>${fmtNum(L2.ind*pac.naoTratados,0)}</b></div>
+        <div><span>Número necessário para tratar (NNT)</span><b>${nn.alteplase.nnt?fmtNum(nn.alteplase.nnt,1):'n/d'}</b></div></div>
+      <div class="cheio"></div>
+      <p class="texto">${R.retornoPorReal&&R.retornoPorReal.tenecteplase>0?`Cada R$ 1,00 investido em trombólise com tenecteplase devolve <b>R$ ${fmtNum(R.retornoPorReal.tenecteplase,2)}</b> em custos evitados nos ${H} anos seguintes.`:''}</p>`;
+    const lista=[cs,ca,ct];
+    $('#q10').innerHTML=`<div class="grafico"><canvas id="g-q10"></canvas></div><table class="tab" style="flex:none"><thead><tr><th>Estratégia</th><th>Total por paciente</th><th>Diferença para não tratar</th><th class="opc-m">No território</th></tr></thead><tbody>${lista.map(c=>{const df=c.desc.total-cs.desc.total;return `<tr><td><span class="marcador"><i style="background:${COR[c.estrategia]}"></i>${NOME[c.estrategia]}</span></td><td>${moeda(c.desc.total)}</td><td class="${cls(df)}">${sm(df)}</td><td class="${cls(df)} opc-m">${moeda0(df*N)}</td></tr>`;}).join('')}</tbody></table>`;
+    graf('g-q10',{type:'bar',data:{labels:lista.map(c=>NOME[c.estrategia]),datasets:[['tratamento','Tratamento','#243B55'],['agudo','Evento agudo','#4F9E8C'],['anual','Cuidado pós-AVC','#B7DED2'],['obito','Óbitos após 90 dias','#94A3B8']].map(([k,r,c])=>({label:r,data:lista.map(x=>x.desc[k]),backgroundColor:c,barPercentage:.55}))},options:{plugins:{legend:{position:'top',align:'end'},tooltip:ttR('y')},scales:{x:{stacked:true,...semGrade},y:{stacked:true,...eixoR}}}});
+    const st=e.distribuicoes.sem_trombolise;
+    $('#t-sem').innerHTML=`<thead><tr><th>Em 90 dias</th><th>Sem trombólise</th><th>Alteplase</th><th>Tenecteplase</th></tr></thead><tbody>
+      <tr><td>Sem sequela (mRS 0 a 1)</td><td>${pct(cs.dist[0]+cs.dist[1])}</td><td>${pct(ca.dist[0]+ca.dist[1])}</td><td>${pct(ct.dist[0]+ct.dist[1])}</td></tr>
+      <tr><td>Dependência (mRS 3 a 5)</td><td>${pct(cs.dist[3]+cs.dist[4]+cs.dist[5])}</td><td>${pct(ca.dist[3]+ca.dist[4]+ca.dist[5])}</td><td>${pct(ct.dist[3]+ct.dist[4]+ct.dist[5])}</td></tr>
+      <tr><td>Óbito</td><td>${pct(cs.dist[6])}</td><td>${pct(ca.dist[6])}</td><td>${pct(ct.dist[6])}</td></tr></tbody>`;
+    $('#n-sem').textContent=`Método ${E.metodoSemTrombolise}: ${(METODOS.find(m=>m[0]===Number(E.metodoSemTrombolise))||[])[1]||''}. Ganho de pacientes sem sequela com alteplase: ${fmtNum(R.trombolisarVsNao.alteplase.indExtra*100,1)} pontos percentuais, NNT de ${fmtNum(R.trombolisarVsNao.alteplase.nnt,1)}.`;
+  } else {
+    const aviso='<div class="vazio"><span class="selo pendente">Dados incompletos</span><p>Informe as distribuições NINDS em Premissas e memória para calcular o custo de não trombolisar.</p></div>';
+    $('#q9').innerHTML=aviso;$('#q10').innerHTML=aviso;$('#t-sem').innerHTML='';$('#n-sem').textContent='';
+  }
+
+  /* Trombectomia */
+  if(R.trombectomia){
+    const tm=R.trombectomia, nTm=N*E.proporcaoTm;
+    $('#q12').innerHTML=`<span class="numero g ${cls(tm.diferenca)}">${grande(Math.abs(tm.diferenca*nTm))}</span>
+      <p class="texto">${tm.diferenca<0?'Evitados':'Acrescidos'} em ${H} anos ao usar tenecteplase na trombólise prévia à trombectomia, para ${fmtNum(nTm,0)} pacientes por ano (${sm(tm.diferenca)} por paciente).</p>
+      <div class="grafico"><canvas id="g-tm"></canvas></div>`;
+    graf('g-tm',{type:'bar',data:{labels:['Trombectomia com alteplase','Trombectomia com tenecteplase'],datasets:[['tratamento','Tratamento','#243B55'],['agudo','Evento agudo','#4F9E8C'],['anual','Cuidado pós-AVC','#B7DED2'],['obito','Óbitos após 90 dias','#94A3B8']].map(([k,r,c])=>({label:r,data:[tm.alteplase.desc[k],tm.tenecteplase.desc[k]],backgroundColor:c,barPercentage:.55}))},options:{plugins:{legend:{position:'top',align:'end'},tooltip:ttR('y')},scales:{x:{stacked:true,...semGrade},y:{stacked:true,...eixoR}}}});
+    $('#tm-num').innerHTML=`<div class="mini-grade" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <div><span>Pacientes por ano</span><b>${fmtNum(nTm,0)}</b></div>
+      <div><span>Recanalização antes do procedimento</span><b>${pct(E.recanalizacao.tenecteplase)} contra ${pct(E.recanalizacao.alteplase)}</b></div>
+      <div><span>Sem sequela a mais por ano</span><b>${fmtNum(tm.independentesExtra*nTm,0)}</b></div>
+      <div><span>Óbitos evitados por ano</span><b>${fmtNum(tm.obitosEvitados*nTm,0)}</b></div></div>`;
+    $('#t-tm').innerHTML=`<thead><tr><th>Em 90 dias</th><th>Alteplase</th><th>Tenecteplase</th><th>Diferença</th></tr></thead><tbody>${[['Sem sequela (mRS 0 a 1)',x=>x.dist[0]+x.dist[1]],['Sequela leve (mRS 2)',x=>x.dist[2]],['Dependência (mRS 3 a 5)',x=>x.dist[3]+x.dist[4]+x.dist[5]],['Óbito',x=>x.dist[6]]].map(([r,f])=>{const df=f(tm.tenecteplase)-f(tm.alteplase);const bomSe=r.startsWith('Sem')?df>0:df<0;return `<tr><td>${r}</td><td>${pct(f(tm.alteplase))}</td><td>${pct(f(tm.tenecteplase))}</td><td class="${Math.abs(df)<1e-9?'':bomSe?'bom':'ruim'}">${df>0?'+':''}${fmtNum(df*100,1)} p.p.</td></tr>`;}).join('')}</tbody>`;
+  } else {
+    $('#q12').innerHTML='<div class="vazio"><span class="selo pendente">Dados incompletos</span><p>Informe as distribuições de trombectomia em Premissas e memória.</p></div>';
+    $('#tm-num').innerHTML='';$('#t-tm').innerHTML='';
+  }
+
+  /* Visao agregada */
+  if(R.agregado){
+    const ag=R.agregado;
+    graf('g-agr',{type:'bar',data:{labels:['Alteplase','Tenecteplase'],datasets:[['tratamento','Tratamento','#243B55'],['agudo','Evento agudo','#4F9E8C'],['anual','Cuidado da sequela','#B7DED2']].map(([k,r,c])=>({label:r,data:[ag.alteplase[k],ag.tenecteplase[k]],backgroundColor:c,barPercentage:.55}))},options:{plugins:{legend:{position:'top',align:'end'},tooltip:ttR('y')},scales:{x:{stacked:true,...semGrade},y:{stacked:true,...eixoR}}}});
+    $('#agr-num').innerHTML=`<span class="numero g ${cls(ag.diferencaPop)}">${grande(Math.abs(ag.diferencaPop))}</span>
+      <p class="texto">${ag.diferenca<0?'Evitados':'Acrescidos'} em ${H} anos no território (${sm(ag.diferenca)} por paciente), considerando apenas dois grupos: sem sequela e com sequela.</p>
+      <table class="tab"><thead><tr><th></th><th>Alteplase</th><th>Tenecteplase</th></tr></thead><tbody>
+        <tr><td>Sem sequela (mRS 0 a 1)</td><td>${pct(ag.alteplase.pInd)}</td><td>${pct(ag.tenecteplase.pInd)}</td></tr>
+        <tr><td>Com sequela viva</td><td>${pct(ag.alteplase.pSeq)}</td><td>${pct(ag.tenecteplase.pSeq)}</td></tr>
+        <tr><td>Óbito em 90 dias</td><td>${pct(ag.alteplase.pObito)}</td><td>${pct(ag.tenecteplase.pObito)}</td></tr>
+        <tr class="total"><td>Custo por paciente em ${H} anos</td><td>${moeda0(ag.alteplase.total)}</td><td>${moeda0(ag.tenecteplase.total)}</td></tr></tbody></table>
+      <p class="texto">${fmtNum(ag.semSequelaExtra,0)} pacientes a mais por ano ficam sem sequela com tenecteplase.</p>`;
+  }
+
+  /* Impacto orcamentario */
+  const io=R.impacto,impTrat=io.linhas.reduce((s,l)=>s+l.impactoTratamento,0);
+  graf('g-aio',{type:'bar',data:{labels:io.linhas.map(l=>'Ano '+l.ano),datasets:[{label:'Somente tratamento',data:io.linhas.map(l=>l.impactoTratamento),backgroundColor:'#94A3B8',borderRadius:5,barPercentage:.7},{label:'Impacto total',data:io.linhas.map(l=>l.impacto),backgroundColor:io.linhas.map(l=>l.impacto<0?'#15803D':'#B4401C'),borderRadius:5,barPercentage:.7}]},options:{plugins:{legend:{position:'top',align:'end'},tooltip:ttR('y')},scales:{y:eixoR,x:semGrade}}});
+  $('#o-tot').textContent=(io.acumImpacto<0?'-':'+')+grande(io.acumImpacto);$('#o-tot').className='numero g '+cls(io.acumImpacto);
+  $('#o-tot-s').textContent=`${grande(io.acumRef)} no cenário atual`;
+  $('#o-trat').textContent=(impTrat<0?'-':'+')+grande(impTrat);$('#o-trat').className='numero '+cls(impTrat);
+  $('#t-aio').innerHTML=`<thead><tr><th></th>${io.linhas.map(l=>`<th>Ano ${l.ano}</th>`).join('')}<th>Total</th></tr></thead><tbody>
+    <tr><td>Novos trombolisados</td>${io.linhas.map(l=>`<td>${fmtNum(l.pacientesNovos,0)}</td>`).join('')}<td></td></tr>
+    <tr><td>Tenecteplase hoje</td>${E.shareAtual.map((_,i)=>`<td class="campo">${num('shareAtual.'+i,'pct','%')}</td>`).join('')}<td></td></tr>
+    <tr><td>Tenecteplase proposta</td>${E.shareProposto.map((_,i)=>`<td class="campo">${num('shareProposto.'+i,'pct','%')}</td>`).join('')}<td></td></tr>
+    <tr><td>Impacto total</td>${io.linhas.map(l=>`<td class="${cls(l.impacto)}">${moeda0(l.impacto)}</td>`).join('')}<td class="${cls(io.acumImpacto)}"><b>${moeda0(io.acumImpacto)}</b></td></tr></tbody>`;
+  $('#t-aio-m').innerHTML=`<div class="l cab"><span>Ano</span><span>Hoje</span><span>Proposta</span><b>Impacto</b></div>`+io.linhas.map((l,i)=>`<div class="l"><span><b style="text-align:left">${l.ano}</b></span>${num('shareAtual.'+i,'pct','%')}${num('shareProposto.'+i,'pct','%')}<b class="${cls(l.impacto)}">${(l.impacto<0?'-':'')+'R$ '+curto(Math.abs(l.impacto))}</b></div>`).join('')+`<div class="l" style="border-top:1px solid var(--borda);padding-top:.4rem"><span>Total</span><span></span><span></span><b class="${cls(io.acumImpacto)}">${(io.acumImpacto<0?'-':'')+'R$ '+curto(Math.abs(io.acumImpacto))}</b></div>`;
+  $$('#t-aio [data-bind], #t-aio-m [data-bind]').forEach(formatar);
+
+  /* Somas das distribuicoes */
+  ['alteplase','tenecteplase','ninds_placebo','ninds_alteplase','tm_alteplase','tm_tenecteplase'].forEach(s=>{
+    const n=Motor.normalizar(E.distribuicoes[s]);
+    const txt=n.dist?`<span class="${Math.abs(n.somaOriginal-1)<.0005?'':'ruim'}">${pct(n.somaOriginal)}</span>`:'<span class="selo pendente">vazia</span>';
+    const a=$(`[data-soma="${s}"]`),b=$(`[data-soma-m="${s}"]`);if(a)a.innerHTML=txt;if(b)b.innerHTML=txt;});
+
+  renderMemoria(e);
+}
+
+function renderMemoria(e){
+  const ca=R.coortes.alteplase,ct=R.coortes.tenecteplase,H=e.horizonte,d=R.tnkVsAlt;
+  const f=(t,x)=>`<div class="formula"><b>${t}</b><br>${x}</div>`;
+  $('#m-metodo-a').innerHTML=`<p class="texto">Coorte de pacientes trombolisados distribuída pelos estados mRS aos 90 dias, que se mantêm durante ${H} anos. A ferramenta apresenta custos; os desfechos clínicos entram apenas como premissa.</p>`+
+    f('Ano 1','tratamento + custo agudo do estado + custo anual x '+fmtNum(e.fracaoAno1,2)+' + óbitos x custo do óbito')+
+    f(`Anos 2 a ${H}`,'custo anual do estado corrigido por '+pct(e.inflacao,1)+' ao ano + óbitos no ano x custo do óbito')+
+    f('Desconto',e.taxaDesconto>0?`valor do ano / (1 + ${pct(e.taxaDesconto,1)}) elevado a (ano menos 1)`:'não aplicado nesta versão')+
+    f('Perspectiva',`${E.perspectiva}, preço ${E.preco.tipo}, fator de custos assistenciais de ${fmtNum(e.fatorAssistencial,2)}`);
+  $('#m-metodo-b').innerHTML=
+    f('Diferença entre estratégias','efeito do tratamento + efeito da sequela + efeito da mortalidade')+
+    f('Braço sem trombólise',(METODOS.find(m=>m[0]===Number(E.metodoSemTrombolise))||[])[1]+'. O grupo mRS 5-6 do NINDS é dividido com fração de '+pct(e.fracaoMrs5,1)+' para mRS 5.')+
+    f('Visão agregada','tratamento + custo agudo médio por grupo + (proporção com sequela x custo anual com sequela) somado ao longo dos anos')+
+    f('Frascos de alteplase',`dose = mínimo entre ${fmtNum(e.dose.alteplaseMgKg,2)} mg/kg x peso e ${fmtNum(e.dose.alteplaseMax,0)} mg; menor total de mg que cubra a dose e depois menor número de frascos`)+
+    `<p class="nota">O custo do óbito após 90 dias não se aplica às mortes em 90 dias, já custeadas no evento agudo.</p>`;
+  const tr=c=>{const t=c.tratamento,m=t.medicamento;return `<div class="card-cabeca"><h3><span class="marcador"><i style="background:${COR[c.estrategia]}"></i>${NOME[c.estrategia]}</span></h3></div><table class="tab"><tbody>
+    <tr><td>Dose com ${fmtNum(e.peso,1)} kg</td><td>${fmtNum(m.dose,2)} mg</td></tr>
+    <tr><td>Frascos</td><td>${c.estrategia==='alteplase'?frascosTexto(m.combo):m.frascos+' de 25 mg'}</td></tr>
+    <tr><td>Medicamento</td><td>${moeda(m.custo)}</td></tr>
+    ${t.operacional.itens.map(i=>`<tr><td>${esc(i.item)}: ${fmtNum(i.custo_unitario,2)} x ${fmtNum(i.quantidade,1)} ${esc(i.unidade)}</td><td>${moeda(i.total)}</td></tr>`).join('')}
+    ${t.operacional.itens.length?'':'<tr><td>Administração em bolus</td><td>R$ 0,00</td></tr>'}
+    <tr class="total"><td>Total</td><td>${moeda(t.total)}</td></tr></tbody></table>`;};
+  $('#m-trat-a').innerHTML=tr(ca);$('#m-trat-b').innerHTML=tr(ct);
+  $('#m-estado').innerHTML=`<thead><tr><th>Estado aos 90 dias</th><th>Evento agudo</th><th class="opc-m">Custo anual</th><th>Cuidado em ${H} anos</th><th class="opc-m">Óbitos após 90 dias</th><th>Total</th></tr></thead><tbody>${ca.porEstado.map((x,k)=>`<tr><td>${ROT[k]}</td><td>${moeda(x.desc.agudo)}</td><td class="opc-m">${k<6?moeda(e.custosEstado[k].anual):''}</td><td>${moeda(x.desc.anual)}</td><td class="opc-m">${moeda(x.desc.obito)}</td><td><b>${moeda(x.desc.total)}</b></td></tr>`).join('')}</tbody>`;
+  renderCoorte();renderFontes();
+}
+function renderCoorte(){
+  const c=R.coortes[modoCoorte],el=$('#m-coorte');
+  if(!c){el.innerHTML='<tbody><tr><td>Distribuição não informada.</td></tr></tbody>';return;}
+  el.innerHTML=`<thead><tr><th>Ano</th><th class="opc-m">Tratamento</th><th class="opc-m">Evento agudo</th><th class="opc-m">Cuidado anual</th><th class="opc-m">Óbitos</th><th>Total do ano</th><th>Fator</th><th>Total considerado</th><th class="opc-m">Vivos ao fim do ano</th></tr></thead><tbody>${c.anos.map(a=>`<tr><td>${a.ano}</td><td class="opc-m">${moeda(a.tratamento)}</td><td class="opc-m">${moeda(a.agudo)}</td><td class="opc-m">${moeda(a.anual)}</td><td class="opc-m">${moeda(a.obito)}</td><td>${moeda(a.totalSemDesc)}</td><td>${fmtNum(a.fator,4)}</td><td>${moeda(a.total)}</td><td class="opc-m">${pct(a.vivos)}</td></tr>`).join('')}<tr class="total"><td>Total</td><td class="opc-m"></td><td class="opc-m"></td><td class="opc-m">${moeda(c.desc.anual)}</td><td class="opc-m">${moeda(c.desc.obito)}</td><td>${moeda(c.totalSemDesc)}</td><td></td><td>${moeda(c.desc.total)}</td><td class="opc-m"></td></tr></tbody>`;
+}
+function linhasFontes(){
+  const L=BD.parametros.map(p=>[p.rotulo,`${fmtNum(Number(p.valor),Number(p.valor)%1?4:0)} ${p.unidade||''}`,p.fonte,p.status]);
+  const vis=new Set();BD.dist.forEach(x=>{if(!vis.has(x.estrategia)){vis.add(x.estrategia);L.push(['Distribuição mRS: '+(NOME[x.estrategia]||x.estrategia),x.proporcao===null?'vazia':'7 estados',x.fonte,x.status]);}});
+  L.push(['Custos por estado de saúde','7 estados',`${BD.custos[0].fonte_agudo}; ${BD.custos[0].fonte_anual}`,BD.custos[0].status]);
+  if(BD.mort[0])L.push(['Mortalidade anual por estado','6 estados',BD.mort[0].fonte,BD.mort[0].status]);
+  BD.oper.forEach(o=>L.push([`${NOME[o.estrategia]}: ${o.item}`,`${fmtNum(Number(o.custo_unitario),2)} x ${fmtNum(Number(o.quantidade),0)}`,o.fonte,o.status]));
+  BD.refs.forEach(r=>L.push([r.codigo,'',r.texto,'']));
+  return L;
+}
+function renderFontes(){
+  const L=linhasFontes(),por=movel()?8:Math.max(5,Math.floor(($('#palco').clientHeight-310)/32)),pags=Math.ceil(L.length/por);
+  paginaFontes=Math.min(paginaFontes,pags-1);const p=L.slice(paginaFontes*por,(paginaFontes+1)*por);
+  $('#pg-info').textContent=`Página ${paginaFontes+1} de ${pags}`;
+  const selo=s=>s?`<span class="selo ${s}">${s==='validado'?'Validado':s==='provisorio'?'Provisório':'Pendente'}</span>`:'';
+  if(movel()){$('#m-fontes').innerHTML=`<tbody>${p.map(l=>`<tr><td style="text-align:left"><b>${esc(l[0])}</b> ${esc(l[1])}<br><span class="nota">${esc(l[2]||'')}</span></td><td>${selo(l[3])}</td></tr>`).join('')}</tbody>`;return;}
+  $('#m-fontes').innerHTML=`<thead><tr><th>Item</th><th>Valor</th><th style="text-align:left">Fonte</th><th>Situação</th></tr></thead><tbody>${p.map(l=>`<tr><td style="max-width:18rem">${esc(l[0])}</td><td style="white-space:nowrap">${esc(l[1])}</td><td style="text-align:left;font-size:.74rem;color:var(--tinta-2)">${esc(l[2]||'')}</td><td>${selo(l[3])}</td></tr>`).join('')}</tbody>`;
+}
+function baixarCsv(){
+  if(!R)return;const ca=R.coortes.alteplase,ct=R.coortes.tenecteplase,cs=R.coortes.sem_trombolise;
+  const n=v=>isFinite(v)?String(Math.round(v*100)/100).replace('.',','):'';const L=[['Seção','Item','Alteplase','Tenecteplase','Sem trombólise']];
+  L.push(['Território',E.territorio,'','','']);
+  L.push(['Pacientes','Trombolisados por ano',n(R.pacientes.tratados),'','']);
+  L.push(['Pacientes','AVC isquêmico sem trombólise',n(R.pacientes.naoTratados),'','']);
+  ROT.forEach((r,k)=>L.push(['Distribuição normalizada',r,n(ca.dist[k]),n(ct.dist[k]),cs?n(cs.dist[k]):'']));
+  [['tratamento','Tratamento'],['agudo','Evento agudo'],['anual','Cuidado anual'],['obito','Óbitos'],['total','Total por paciente']].forEach(([k,r])=>L.push(['Custo por paciente',r,n(ca.desc[k]),n(ct.desc[k]),cs?n(cs.desc[k]):'']));
+  ca.anos.forEach((a,i)=>L.push(['Custo por ano','Ano '+a.ano,n(a.total),n(ct.anos[i].total),cs?n(cs.anos[i].total):'']));
+  ['tratamento','incapacidade','mortalidade','total'].forEach(k=>L.push(['Decomposição tenecteplase menos alteplase',k,'',n(R.tnkVsAlt[k]),'']));
+  if(R.agregado)['tratamento','agudo','anual','total'].forEach(k=>L.push(['Visão agregada',k,n(R.agregado.alteplase[k]),n(R.agregado.tenecteplase[k]),'']));
+  if(R.trombectomia)L.push(['Trombectomia','Diferença por paciente','',n(R.trombectomia.diferenca),'']);
+  R.impacto.linhas.forEach(l=>L.push(['Impacto orçamentário (atual; proposto; impacto)','Ano '+l.ano,n(l.referencia),n(l.proposto),n(l.impacto)]));
+  L.push(['Entradas','JSON',JSON.stringify(E).replace(/;/g,','),'','']);
+  const csv='\ufeff'+L.map(l=>l.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(';')).join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='memoria_calculo_avc.csv';a.click();
+}
+async function salvar(){
+  const nome=$('#sv-nome').value.trim();if(!nome){$('#sv-msg').textContent='Informe o nome do cenário.';return;}
+  const ca=R.coortes.alteplase,ct=R.coortes.tenecteplase;
+  const dados={nome,territorio_tipo:$('#sv-tipo').value,territorio_nome:E.territorio||null,uf:$('#sv-uf').value||null,responsavel:$('#sv-resp').value.trim()||null,
+    cmed_versao_id:E.preco.versaoId,perspectiva:E.perspectiva,entradas:E,
+    resultados:{pacientes_tratados:R.pacientes.tratados,nao_tratados:R.pacientes.naoTratados,custo_paciente_alteplase:ca.desc.total,custo_paciente_tenecteplase:ct.desc.total,
+      diferenca_paciente:R.tnkVsAlt.total,diferenca_populacao:R.tnkVsAltPop.total,impacto_orcamentario_acumulado:R.impacto.acumImpacto,
+      custo_nao_trombolisar:R.custoNaoTratarPop?R.custoNaoTratarPop.tenecteplase:null,agregado:R.agregado?R.agregado.diferencaPop:null}};
+  $('#sv-confirmar').disabled=true;$('#sv-msg').textContent='';
+  try{const [c]=await inserir('cenarios',dados);BD.cenarios.unshift(c);$('#dlg-salvar').close();}catch(err){$('#sv-msg').textContent=err.message;}finally{$('#sv-confirmar').disabled=false;}
+}
+async function abrir(){
+  const id=$('#sel-cenario').value;if(!id){$('#ab-msg').textContent='Selecione um cenário.';return;}
+  try{const [c]=await api('cenarios',`select=entradas&id=eq.${encodeURIComponent(id)}`);if(!c)return;E=Object.assign(clonar(BASE),c.entradas);formatarTodos();modo();montarUf();recalcular();$('#dlg-abrir').close();}catch(err){$('#ab-msg').textContent=err.message;}
+}
+function pendencias(){
+  const it=[];BD.parametros.filter(p=>p.status!=='validado'&&!p.chave.startsWith('share_')).forEach(p=>it.push([p.rotulo,p.status]));
+  if(BD.parametros.some(p=>p.chave.startsWith('share_')&&p.status!=='validado'))it.push(['Participação da tenecteplase por ano','provisorio']);
+  const v=new Set();BD.dist.filter(d=>d.status!=='validado').forEach(d=>{if(!v.has(d.estrategia)){v.add(d.estrategia);it.push(['Desfechos: '+(NOME[d.estrategia]||d.estrategia),d.status]);}});
+  if(BD.custos.some(c=>c.status!=='validado'))it.push(['Custos por estado de saúde',BD.custos[0].status]);
+  if(BD.mort.some(m=>m.status!=='validado'))it.push(['Mortalidade anual após 90 dias',BD.mort[0].status]);
+  const ops=BD.oper.filter(o=>o.status!=='validado');if(ops.length)it.push(['Custos de administração',ops[0].status]);
+  return it;
+}
+async function iniciar(){
+  if(NOME_FERRAMENTA&&!NOME_FERRAMENTA.includes('__NOME'))$('#marca-nome').textContent=NOME_FERRAMENTA;
+  if(LOGO_URL&&!LOGO_URL.includes('__LOGO'))$('#marca-simbolo').innerHTML=`<img src="${LOGO_URL}" alt="" style="width:100%;height:100%;object-fit:contain">`;
+  if(SUPABASE_URL.includes('__SUPABASE')||!SUPABASE_URL.startsWith('https://')){$('#palco').innerHTML='<div class="tela-estado"><div><b>Credenciais não configuradas</b>Preencha as variáveis do Supabase no script Python e gere o arquivo novamente.</div></div>';$('#status-conexao').textContent='Sem configuração';$('#ponto').className='ponto erro';return;}
+  try{
+    await carregar();montarBase();E=clonar(BASE);
+    $('#ponto').className='ponto ok';$('#status-conexao').textContent='Dados de '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    document.documentElement.classList.toggle('movel',mqMovel.matches);Chart.defaults.font.size=mqMovel.matches?10.5:11;
+    montarVistas();ligar();irPara('visao');
+    mqMovel.addEventListener('change',aplicarModoTela);
+    const p=pendencias();if(p.length){$('#btn-pendencias').hidden=false;$('#n-pend').textContent=p.length;$('#n-pend-m').hidden=false;$('#n-pend-m').textContent=p.length;$('#n-pend-m2').textContent=`(${p.length})`;
+      $('#lista-pendencias').innerHTML=p.map(x=>`<div><span>${esc(x[0])}</span><span class="selo ${x[1]}">${x[1]==='pendente'?'Pendente':'Provisório'}</span></div>`).join('');
+      $('#btn-pendencias').addEventListener('click',()=>$('#dlg-pendencias').showModal());}
+    aplicarTerritorio();
+    window.addEventListener('resize',()=>{if(R)renderFontes();});
+  }catch(err){console.error(err);$('#ponto').className='ponto erro';$('#status-conexao').textContent='Falha na conexão';$('#palco').innerHTML=`<div class="tela-estado"><div><b>Não foi possível carregar os dados</b>${esc(err.message)}<br><br>Verifique a internet, a URL e a chave pública do Supabase.</div></div>`;}
+}
+iniciar();
+})();
+</script>
+</body>
+</html>
